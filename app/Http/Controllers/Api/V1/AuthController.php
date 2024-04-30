@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\LoginRequest;
 use App\Http\Requests\V1\RegisterRequest;
+use App\Http\Resources\V1\AdminResource;
 use App\Http\Resources\V1\UserResource;
+use App\Services\AdminService;
 use App\Services\UserService;
 use App\Traits\HttpResponseTrait;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -18,10 +18,12 @@ class AuthController extends Controller
     use HttpResponseTrait;
 
     private UserService $userService;
+    private AdminService $adminService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, AdminService $adminService)
     {
         $this->userService = $userService;
+        $this->adminService = $adminService;
     }
 
     public function register(RegisterRequest $request)
@@ -38,7 +40,7 @@ class AuthController extends Controller
         );
     }
 
-    public function login(LoginRequest $request)
+    public function userLogin(LoginRequest $request)
     {
         $user = $this->userService->getUserByEmail($request['email']);
         if(!$user){
@@ -53,4 +55,22 @@ class AuthController extends Controller
             'token' => $token
         ]);
     }
+
+    public function adminLogin(LoginRequest $request)
+    {
+        $admin = $this->adminService->getAdminByEmail($request['email']);
+        if(!$admin){
+            return $this->error('', 'No admin with such email', 401);
+        }
+        if (!Hash::check($request['password'], $admin->password)) {
+            return $this->error('', 'Credentials not match', 401);
+        }
+        $token = $admin->createToken('default')->plainTextToken;
+        return $this->success([
+            'user' => new AdminResource($admin),
+            'token' => $token
+        ]);
+    }
+
+
 }
