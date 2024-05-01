@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreWordRequest;
 use App\Http\Resources\V1\WordResource;
-use App\Http\Resources\V1\WordCollection;
 use App\Models\Word;
 use App\Services\WordService;
 
@@ -21,7 +20,7 @@ class WordController extends Controller
 
     public function index()
     {
-        return new WordCollection(Word::all());
+        return  WordResource::collection(Word::all());
     }
 
     public function show(Word $word){
@@ -33,5 +32,3 @@ class WordController extends Controller
         return new WordResource($this->wordService->saveWord($request->all()));
     }
 }
-//dd();
-//return new WordResource(Word::create($request->all()));

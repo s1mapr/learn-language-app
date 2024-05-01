@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreTextRequest;
 use App\Http\Resources\V1\TextResource;
-use App\Http\Resources\V1\TextCollection;
 use App\Models\Text;
 use App\Services\TextService;
 
@@ -40,10 +39,10 @@ class TextController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Text $text)
+    public function show($id)
     {
+        $text = $this->textService->getTextById($id);
         return new TextResource($text);
-
     }
 
     /**

@@ -10,4 +10,8 @@ class Word extends Model
     use HasFactory;
 
     protected $fillable = ['word', 'translation_uk'];
+
+    public function wordCollections(){
+        return $this->belongsToMany(WordCollection::class);
+    }
 }

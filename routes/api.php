@@ -23,12 +23,25 @@ Route::prefix('/v1/auth')->name('auth.')->controller(Controllers\AuthController:
 
 Route::prefix('/v1/words')->name('words.')->controller(Controllers\WordController::class)->group(function () {
 
-    Route::get('/', 'index')->name('words.index');
+    Route::get('/', 'index')->name('index');
 
-    Route::post('/', 'store')->name('words.store')->middleware('auth:user');
+    Route::post('/', 'store')->name('store')->middleware('auth:user');
+});
+
+Route::prefix('/v1/texts')->name('texts.')->controller(Controllers\TextController::class)->group(function () {
+
+    Route::get('/{id}', 'show')->name('show');
+
 });
 
 Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserController::class)->group(function () {
 
-    Route::patch('/{id}', 'update')->name('user.update')->middleware(['auth:user,admin']);
+    Route::patch('/{id}', 'update')->name('update')->middleware(['auth:user,admin']);
+});
+
+Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\WordCollectionController::class)->group(function () {
+
+    Route::post('/', 'store')->name('store');
+    Route::get('/', 'getPublicCollections')->name('getPublicCollections');
+    Route::get('/{id}', 'show')->name('show');
 });

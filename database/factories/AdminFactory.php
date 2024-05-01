@@ -20,7 +20,7 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            'email'=>$this->faker->unique()->safeEmail(),
+            'email'=>"admin@admin.com",
             'password' => static::$password ??= Hash::make('password'),
         ];
     }

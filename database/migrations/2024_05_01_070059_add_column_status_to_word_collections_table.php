@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('word_collections', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('text_id');
-            $table->timestamps();
+        Schema::table('word_collections', function (Blueprint $table) {
+            $table->enum('status', ['private', 'pending', 'public'])
+                ->after('name')
+                ->default('private');
         });
     }
 
@@ -24,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('word_collections');
+        Schema::table('word_collections', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 };

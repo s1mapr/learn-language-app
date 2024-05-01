@@ -22,4 +22,8 @@ class TextService
         $text['translation_uk'] = $translatedText;
         return $this->textRepository->saveText($text);
     }
+
+    public function getTextById($id){
+        return $this->textRepository->getTextById($id);
+    }
 }

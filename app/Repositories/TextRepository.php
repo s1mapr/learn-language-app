@@ -13,4 +13,8 @@ class TextRepository
         $newText->save();
         return $newText;
     }
+
+    public function getTextById($id){
+        return Text::find($id);
+    }
 }
