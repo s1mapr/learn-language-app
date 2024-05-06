@@ -35,13 +35,16 @@ Route::prefix('/v1/texts')->name('texts.')->controller(Controllers\TextControlle
 });
 
 Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserController::class)->group(function () {
-
+    Route::get('/', 'index')->name('index');
     Route::patch('/{id}', 'update')->name('update')->middleware(['auth:user,admin']);
+    Route::get('/{userId}/collections', 'userCollections')->name('userCollections');
+    Route::post('/{userId}/startCollection/{collectionId}', 'startCollection')->name('startCollection');
 });
 
 Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\WordCollectionController::class)->group(function () {
 
     Route::post('/', 'store')->name('store');
-    Route::get('/', 'getPublicCollections')->name('getPublicCollections');
+    Route::get('/', 'index')->name('index');
+    Route::get('/public', 'getPublicCollections')->name('getPublicCollections');
     Route::get('/{id}', 'show')->name('show');
 });

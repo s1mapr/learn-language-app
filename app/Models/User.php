@@ -31,4 +31,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function wordCollections(){
+        return $this->belongsToMany(WordCollection::class);
+    }
 }

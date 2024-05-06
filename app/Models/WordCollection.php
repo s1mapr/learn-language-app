@@ -22,4 +22,7 @@ class WordCollection extends Model
     public function text(){
         return $this->belongsTo(Text::class);
     }
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
 }

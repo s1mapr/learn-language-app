@@ -61,4 +61,14 @@ class WordCollectionService
         return $wordIds;
     }
 
+    public function getWordCollectionById($collectionId)
+    {
+        return $this->wordCollectionRepository->getCollectionById($collectionId);
+    }
+
+    public function getAllWordCollections()
+    {
+        return $this->wordCollectionRepository->getAllWordCollections();
+    }
+
 }

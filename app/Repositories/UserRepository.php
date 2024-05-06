@@ -29,4 +29,14 @@ class UserRepository
         return $user;
     }
 
+    public function getUserById($userId)
+    {
+        return User::find($userId);
+    }
+
+    public function getAllUsers()
+    {
+        return User::all();
+    }
+
 }

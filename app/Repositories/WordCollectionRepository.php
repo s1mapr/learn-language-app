@@ -17,4 +17,9 @@ class WordCollectionRepository
     public function getPublicCollections(){
         return WordCollection::where('status', 'public')->get();
     }
+
+    public function getAllWordCollections()
+    {
+        return WordCollection::all();
+    }
 }

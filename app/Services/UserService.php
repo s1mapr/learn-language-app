@@ -27,4 +27,14 @@ class UserService
     public function updateUser($id, $user){
         return $this->userRepository->updateUser($id, $user);
     }
+
+    public function getUserById($userId)
+    {
+        return $this->userRepository->getUserById($userId);
+    }
+
+    public function getAllUsers()
+    {
+        return $this->userRepository->getAllUsers();
+    }
 }
