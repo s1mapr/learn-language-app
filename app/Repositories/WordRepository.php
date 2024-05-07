@@ -10,4 +10,9 @@ class WordRepository
     {
         return Word::firstOrCreate($word);
     }
+
+    public function getAllWords()
+    {
+        return Word::all();
+    }
 }

@@ -23,4 +23,8 @@ class WordService
         $word['translation_uk'] = $translatedWord;
         return $this->wordRepository->saveWord($word);
     }
+
+    public function getAllWords(){
+        return $this->wordRepository->getAllWords();
+    }
 }

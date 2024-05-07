@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Http\Dto\AnswerDto;
+use App\Http\Dto\QuestionDto;
+use App\Http\Dto\QuizDto;
 use App\Repositories\WordCollectionRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -13,9 +16,9 @@ class WordCollectionService
 
 
     public function __construct(WordCollectionRepository $wordCollectionRepository,
-                                WordService $wordService,
-                                TextService $textService,
-        )
+                                WordService              $wordService,
+                                TextService              $textService,
+    )
     {
         $this->wordCollectionRepository = $wordCollectionRepository;
         $this->wordService = $wordService;
@@ -84,6 +87,31 @@ class WordCollectionService
     public function changeCollectionStatus($id, mixed $status)
     {
         return $this->wordCollectionRepository->changeCollectionStatus($id, $status);
+    }
+
+    public function getQuiz($collectionId)
+    {
+        $wordCollection = $this->getWordCollectionById($collectionId);
+        $allWords = $this->wordService->getAllWords();
+        $collectionWords = $wordCollection->words;
+        $wordCount = count($allWords);
+        $quiz = new QuizDto();
+        foreach ($collectionWords as $word) {
+            $question = new QuestionDto($word['word']);
+            $question->setAnswers(new AnswerDto(1, $word['translation_uk'], true));
+            for ($i = 2; $i <= 4; $i++) {
+                $randomId = rand(0, $wordCount-1);
+                $randomWord = $allWords[$randomId];
+                $isAnswer = false;
+                if($randomWord['word'] == $word['word']) {
+                    $isAnswer = true;
+                }
+                $question->setAnswers(new AnswerDto($i, $randomWord['translation_uk'], $isAnswer));
+                $question->shuffleAnswers();
+            }
+            $quiz->setQuestions($question);
+        }
+        return $quiz->toArray();
     }
 
 }

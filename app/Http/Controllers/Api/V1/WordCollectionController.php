@@ -81,4 +81,8 @@ class WordCollectionController extends Controller
         return $this->commentService->createComment($data);
     }
 
+    public function getQuizForCollection($collectionId){
+        return $this->success($this->wordCollectionService->getQuiz($collectionId));
+    }
+
 }

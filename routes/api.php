@@ -49,5 +49,6 @@ Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\Wo
     Route::get('/requests', 'getRequestsForPublish')->name('getRequestsForPublish');
     Route::get('/public', 'getPublicCollections')->name('getPublicCollections');
     Route::get('/{id}', 'show')->name('show');
+    Route::get('/{id}/quiz', 'getQuizForCollection')->name('getQuizForCollection');
     Route::patch('/changeStatus/{id}', 'changeStatusOfCollection')->name('changeStatusOfCollection');
 });
