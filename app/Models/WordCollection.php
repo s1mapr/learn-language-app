@@ -25,4 +25,9 @@ class WordCollection extends Model
     public function users(){
         return $this->belongsToMany(User::class, "user_word_collections", "word_collection_id", "user_id");
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
