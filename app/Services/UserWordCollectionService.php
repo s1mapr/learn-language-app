@@ -20,6 +20,10 @@ class UserWordCollectionService
     public function startCollection($userId, $collectionId)
     {
         $this->userWordCollectionRepository->startCollection($userId, $collectionId);
+        $wordCollection = $this->wordCollectionService->getWordCollectionById($collectionId);
+        $words = $wordCollection->words;
+        $user = $this->userService->getUserById($userId);
+        $user->words()->syncWithoutDetaching($words);
     }
 
     public function makeUserAuthorOfCollection($userId, $wordCollectionId)
@@ -30,6 +34,5 @@ class UserWordCollectionService
 //    {
 //        $this->userWordCollectionRepository->setOrUnsetCollectionInFavorites($userId, $collectionId);
 //    }
-
 
 }

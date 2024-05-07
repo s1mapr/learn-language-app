@@ -35,4 +35,8 @@ class User extends Authenticatable
     public function wordCollections(){
         return $this->belongsToMany(WordCollection::class, "user_word_collections", "user_id", "word_collection_id");
     }
+
+    public function words(){
+        return $this->belongsToMany(Word::class, "user_word", "user_id", "word_id");
+    }
 }

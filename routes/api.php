@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\V1\TextController;
-use App\Http\Controllers\Api\V1\WordController;
+use App\Http\Controllers\Api\V1 as Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1 as Controllers;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -36,9 +34,10 @@ Route::prefix('/v1/texts')->name('texts.')->controller(Controllers\TextControlle
 
 Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserController::class)->group(function () {
     Route::get('/', 'index')->name('index');
+    Route::get('words', 'getUserWords')->name('getUserWords')->middleware('auth:user');
     Route::patch('/{id}', 'update')->name('update')->middleware(['auth:user,admin']);
     Route::get('/{userId}/collections', 'userCollections')->name('userCollections');
-    Route::post('/{userId}/startCollection/{collectionId}', 'startCollection')->name('startCollection');
+    Route::post('/startCollection/{collectionId}', 'startCollection')->name('startCollection')->middleware(['auth:user']);
 });
 
 Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\WordCollectionController::class)->group(function () {
