@@ -19,7 +19,11 @@ class WordCollectionResource extends JsonResource
             'name'=>$this->name,
             'status'=>$this->status,
             'textId'=>$this->text_id,
-            'words'=>WordResource::collection($this->words)
+            'posterUrl'=>$this->poster_url,
+            'bannerUrl'=>$this->banner_url,
+            'wordsCount'=>$this->wordsCount,
+            'wordsLearned'=>$this->wordsLearned,
+            'comments'=>CommentResource::collection($this->comments)
         ];
     }
 }

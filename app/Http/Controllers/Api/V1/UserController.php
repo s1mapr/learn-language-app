@@ -46,10 +46,19 @@ class UserController extends Controller
         return $this->success('', "collection successfully started");
     }
 
-    public function userCollections($userId)
+    public function userCollections()
     {
+        $userId = Auth::id();
         $user = $this->userService->getUserById($userId);
-        return $user->wordCollections;
+        $wordCollections = $user->wordCollections;
+        foreach ($wordCollections as $wordCollection) {
+            $words = $wordCollection->words;
+            $wordsCount = count($words);
+            $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
+            $wordCollection['wordsCount'] = $wordsCount;
+            $wordCollection['wordsLearned'] = $wordsLearned;
+        }
+        return $this->success(WordCollectionResource::collection($wordCollections));
     }
 
     public function getUserWords(){

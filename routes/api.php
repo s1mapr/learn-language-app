@@ -36,7 +36,7 @@ Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserControlle
     Route::get('/', 'index')->name('index');
     Route::get('words', 'getUserWords')->name('getUserWords')->middleware('auth:user');
     Route::patch('/{id}', 'update')->name('update')->middleware(['auth:user,admin']);
-    Route::get('/{userId}/collections', 'userCollections')->name('userCollections');
+    Route::get('/collections', 'userCollections')->name('userCollections')->middleware('auth:user');
     Route::post('/startCollection/{collectionId}', 'startCollection')->name('startCollection')->middleware(['auth:user']);
 });
 
@@ -46,8 +46,8 @@ Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\Wo
     Route::post('/{id}/comment', 'createComment')->name('comment');
     Route::get('/', 'index')->name('index');
     Route::get('/requests', 'getRequestsForPublish')->name('getRequestsForPublish');
-    Route::get('/public', 'getPublicCollections')->name('getPublicCollections');
-    Route::get('/{id}', 'show')->name('show');
+    Route::get('/public', 'getPublicCollections')->name('getPublicCollections')->middleware('auth:user');
+    Route::get('/{id}', 'show')->name('show')->middleware('auth:user');
     Route::get('/{id}/quiz', 'getQuizForCollection')->name('getQuizForCollection');
     Route::patch('/changeStatus/{id}', 'changeStatusOfCollection')->name('changeStatusOfCollection');
 });

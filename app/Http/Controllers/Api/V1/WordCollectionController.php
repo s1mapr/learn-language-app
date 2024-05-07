@@ -15,6 +15,7 @@ use App\Services\CommentService;
 use App\Services\UserWordCollectionService;
 use App\Services\WordCollectionService;
 use App\Traits\HttpResponseTrait;
+use Illuminate\Support\Facades\Auth;
 
 class WordCollectionController extends Controller
 {
@@ -46,19 +47,35 @@ class WordCollectionController extends Controller
         return response()->json($wordCollection, 200);
     }
 
+    //todo refactor this method
     public function getPublicCollections()
     {
-        return $this->wordCollectionService->getPublicCollections();
+        $wordCollections = $this->wordCollectionService->getPublicCollections();
+        $userId = Auth::id();
+        foreach ($wordCollections as $wordCollection) {
+            $words = $wordCollection->words;
+            $wordsCount = count($words);
+            $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
+            $wordCollection['wordsCount'] = $wordsCount;
+            $wordCollection['wordsLearned'] = $wordsLearned;
+        }
+        return $this->success(WordCollectionResource::collection($wordCollections));
     }
 
 
     public function show($id)
     {
+        $userId = Auth::id();
         $wordCollection = $this->wordCollectionService->getWordCollectionById($id);
         $comments = $this->commentService->getCollectionComments($id);
+        $words = $wordCollection->words;
+        $wordsCount = count($words);
+        $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
+        $wordCollection['wordsCount'] = $wordsCount;
+        $wordCollection['wordsLearned'] = $wordsLearned;
+        $wordCollection['comments'] = $comments;
         return $this->success([
-            new WordCollectionResource($wordCollection),
-            CommentResource::collection($comments)
+            new WordCollectionResource($wordCollection)
         ]);
     }
 

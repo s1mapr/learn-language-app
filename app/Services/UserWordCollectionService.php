@@ -30,6 +30,18 @@ class UserWordCollectionService
     {
         $this->userWordCollectionRepository->makeUserAuthorOfCollection($userId, $wordCollectionId);
     }
+
+    public function getCountOfUserWords($words, $userId)
+    {
+        $count = 0;
+        $userWords= $this->userService->getUserById($userId)->words;
+        foreach ($words as $word) {
+            if($userWords->contains($word)){
+                $count++;
+            }
+        }
+        return $count;
+    }
 //    public function setOrUnsetCollectionInFavorites($userId, $collectionId)
 //    {
 //        $this->userWordCollectionRepository->setOrUnsetCollectionInFavorites($userId, $collectionId);
