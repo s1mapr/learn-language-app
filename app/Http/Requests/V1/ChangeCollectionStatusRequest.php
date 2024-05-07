@@ -4,7 +4,7 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWordCollectionRequest extends FormRequest
+class ChangeCollectionStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,11 @@ class StoreWordCollectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'text' => ['required', 'string'],
             'status' => ['required', 'string', function ($attribute, $value, $fail) {
-                if (!in_array($value, ['private', 'pending', 'public'])) {
+                if (!in_array($value, ['private', 'public'])) {
                     $fail('The ' . $attribute . ' is invalid.');
                 }
             }],
-            'userId' => ['int', 'exists:users,id'],
         ];
     }
 }

@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_word_collection', function (Blueprint $table) {
+        Schema::create('user_word_collections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('word_collection_id')->constrained();
-            $table->boolean('isFavorite')->default(false);
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('word_collection_id');
+            $table->boolean('is_favorite')->default(false);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('word_collection_id')->references('id')->on('word_collections');
+            $table->unique(['user_id', 'word_collection_id']);
         });
     }
 
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_word_collection');
+        Schema::dropIfExists('user_word_collections');
     }
 };

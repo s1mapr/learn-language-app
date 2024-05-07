@@ -19,11 +19,13 @@ class UserWordCollectionService
 
     public function startCollection($userId, $collectionId)
     {
-        $user = $this->userService->getUserById($userId);
-        $wordCollection = $this->wordCollectionService->getWordCollectionById($collectionId);
-        $user->wordCollections()->attach($wordCollection);
+        $this->userWordCollectionRepository->startCollection($userId, $collectionId);
     }
 
+    public function makeUserAuthorOfCollection($userId, $wordCollectionId)
+    {
+        $this->userWordCollectionRepository->makeUserAuthorOfCollection($userId, $wordCollectionId);
+    }
 //    public function setOrUnsetCollectionInFavorites($userId, $collectionId)
 //    {
 //        $this->userWordCollectionRepository->setOrUnsetCollectionInFavorites($userId, $collectionId);

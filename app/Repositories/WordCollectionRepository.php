@@ -20,6 +20,25 @@ class WordCollectionRepository
 
     public function getAllWordCollections()
     {
-        return WordCollection::all();
+        return WordCollection::with('text')->get();
     }
+
+    public function getRequestsForPublish()
+    {
+        return WordCollection::where('status', 'pending')->with('text')->get();
+    }
+
+    public function changeCollectionStatus($id, $status)
+    {
+        $wordCollection = WordCollection::find($id);
+        if (!$wordCollection) {
+            return null;
+        }
+        $wordCollection['status'] = $status;
+        $wordCollection->update($wordCollection->toArray());
+
+        return $wordCollection;
+    }
+
+
 }

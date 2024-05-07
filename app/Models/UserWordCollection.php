@@ -9,5 +9,5 @@ class UserWordCollection extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['isFavorite'];
+    protected $fillable = ['user_id','word_collection_id','is_favorite','is_author'];
 }

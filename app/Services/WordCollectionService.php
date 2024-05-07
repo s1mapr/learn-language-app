@@ -11,7 +11,11 @@ class WordCollectionService
     private WordService $wordService;
     private TextService $textService;
 
-    public function __construct(WordCollectionRepository $wordCollectionRepository, WordService $wordService, TextService $textService)
+
+    public function __construct(WordCollectionRepository $wordCollectionRepository,
+                                WordService $wordService,
+                                TextService $textService,
+        )
     {
         $this->wordCollectionRepository = $wordCollectionRepository;
         $this->wordService = $wordService;
@@ -24,8 +28,8 @@ class WordCollectionService
             Db::beginTransaction();
             $words = $this->parseText($data['text']);
             $wordIds = $this->createWordsAndGetIds($words);
-            $createdText = $this->textService->saveText(['text'=>$data['text']]);
-            $newData = ['name' => $data['name'], 'text_id' => $createdText['id'], 'status'=>$data['status']];
+            $createdText = $this->textService->saveText(['text' => $data['text']]);
+            $newData = ['name' => $data['name'], 'text_id' => $createdText['id'], 'status' => $data['status']];
             $wordCollection = $this->wordCollectionRepository->createCollection($newData);
             $wordCollection->words()->attach($wordIds);
             Db::commit();
@@ -36,6 +40,7 @@ class WordCollectionService
         }
     }
 
+
     public function getPublicCollections()
     {
         return $this->wordCollectionRepository->getPublicCollections();
@@ -44,7 +49,7 @@ class WordCollectionService
     private function parseText($text)
     {
         $words = preg_split('/\W+/', strtolower($text), -1, PREG_SPLIT_NO_EMPTY);
-        $filteredWords = array_filter($words, function($word) {
+        $filteredWords = array_filter($words, function ($word) {
             return strlen($word) >= 3;
         });
         shuffle($filteredWords);
@@ -69,6 +74,16 @@ class WordCollectionService
     public function getAllWordCollections()
     {
         return $this->wordCollectionRepository->getAllWordCollections();
+    }
+
+    public function getRequestsForPublish()
+    {
+        return $this->wordCollectionRepository->getRequestsForPublish();
+    }
+
+    public function changeCollectionStatus($id, mixed $status)
+    {
+        return $this->wordCollectionRepository->changeCollectionStatus($id, $status);
     }
 
 }

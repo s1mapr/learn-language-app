@@ -23,6 +23,6 @@ class WordCollection extends Model
         return $this->belongsTo(Text::class);
     }
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, "user_word_collections", "word_collection_id", "user_id");
     }
 }

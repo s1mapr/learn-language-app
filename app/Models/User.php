@@ -33,6 +33,6 @@ class User extends Authenticatable
     }
 
     public function wordCollections(){
-        return $this->belongsToMany(WordCollection::class);
+        return $this->belongsToMany(WordCollection::class, "user_word_collections", "user_id", "word_collection_id");
     }
 }

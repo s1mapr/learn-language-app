@@ -45,6 +45,8 @@ Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\Wo
 
     Route::post('/', 'store')->name('store');
     Route::get('/', 'index')->name('index');
+    Route::get('/requests', 'getRequestsForPublish')->name('getRequestsForPublish');
     Route::get('/public', 'getPublicCollections')->name('getPublicCollections');
     Route::get('/{id}', 'show')->name('show');
+    Route::patch('/changeStatus/{id}', 'changeStatusOfCollection')->name('changeStatusOfCollection');
 });

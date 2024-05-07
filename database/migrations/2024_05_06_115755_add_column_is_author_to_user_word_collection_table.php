@@ -11,14 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('word_collections', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('text_id');
-            $table->timestamps();
-
-            $table->foreign('text_id')->references('id')->on('texts');
-
+        Schema::table('user_word_collections', function (Blueprint $table) {
+            $table->boolean('is_author')->default(false)->after('is_favorite');
         });
     }
 
@@ -27,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('word_collections');
+        Schema::table('user_word_collections', function (Blueprint $table) {
+            $table->dropColumn('is_author');
+        });
     }
 };
