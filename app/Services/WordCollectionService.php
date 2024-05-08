@@ -71,7 +71,9 @@ class WordCollectionService
 
     public function getWordCollectionById($collectionId)
     {
-        return $this->wordCollectionRepository->getCollectionById($collectionId);
+        $wordCollection = $this->wordCollectionRepository->getCollectionById($collectionId);
+        $this->addView($wordCollection);
+        return $wordCollection;
     }
 
     public function getAllWordCollections()
@@ -96,22 +98,36 @@ class WordCollectionService
         $collectionWords = $wordCollection->words;
         $wordCount = count($allWords);
         $quiz = new QuizDto();
+        $wordId = 1;
         foreach ($collectionWords as $word) {
-            $question = new QuestionDto($word['word']);
+            $question = new QuestionDto($wordId++, $word['word']);
             $question->setAnswers(new AnswerDto(1, $word['translation_uk'], true));
             for ($i = 2; $i <= 4; $i++) {
-                $randomId = rand(0, $wordCount-1);
+                $randomId = rand(0, $wordCount - 1);
                 $randomWord = $allWords[$randomId];
                 $isAnswer = false;
-                if($randomWord['word'] == $word['word']) {
+                if ($randomWord['word'] == $word['word']) {
                     $isAnswer = true;
                 }
                 $question->setAnswers(new AnswerDto($i, $randomWord['translation_uk'], $isAnswer));
-                $question->shuffleAnswers();
             }
+            $question->shuffleAnswers();
             $quiz->setQuestions($question);
+
         }
         return $quiz->toArray();
+    }
+
+    public function flashCards($collectionId)
+    {
+        $wordCollection = $this->getWordCollectionById($collectionId);
+        return $wordCollection->words;
+    }
+
+    private function addView($wordCollection)
+    {
+        $wordCollection->views +=1;
+        $wordCollection->save();
     }
 
 }

@@ -21,6 +21,8 @@ class WordCollectionResource extends JsonResource
             'textId'=>$this->text_id,
             'posterUrl'=>$this->poster_url,
             'bannerUrl'=>$this->banner_url,
+            'likes'=>$this->likes,
+            'views'=>$this->views,
             'wordsCount'=>$this->wordsCount,
             'wordsLearned'=>$this->wordsLearned,
             'comments'=>CommentResource::collection($this->comments)

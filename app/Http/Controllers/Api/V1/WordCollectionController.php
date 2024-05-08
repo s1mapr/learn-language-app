@@ -7,10 +7,8 @@ use App\Http\Requests\V1\ChangeCollectionStatusRequest;
 use App\Http\Requests\V1\StoreCommentRequest;
 use App\Http\Requests\V1\StoreWordCollectionRequest;
 use App\Http\Resources\V1\AdminViewCollectionResource;
-use App\Http\Resources\V1\CommentResource;
 use App\Http\Resources\V1\WordCollectionResource;
 use App\Http\Resources\V1\WordResource;
-use App\Models\WordCollection;
 use App\Services\CommentService;
 use App\Services\UserWordCollectionService;
 use App\Services\WordCollectionService;
@@ -100,6 +98,11 @@ class WordCollectionController extends Controller
 
     public function getQuizForCollection($collectionId){
         return $this->success($this->wordCollectionService->getQuiz($collectionId));
+    }
+
+    public function getFlashCardsForCollection($collectionId)
+    {
+        return $this->success(WordResource::collection($this->wordCollectionService->flashCards($collectionId)));
     }
 
 }

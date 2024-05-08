@@ -14,7 +14,9 @@ class WordCollection extends Model
         'banner_url',
         'poster_url',
         'status',
-        'text_id'
+        'text_id',
+        'views',
+        'likes'
     ];
 
     public function words(){

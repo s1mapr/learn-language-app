@@ -46,6 +46,8 @@ class UserController extends Controller
         return $this->success('', "collection successfully started");
     }
 
+
+    //todo refactor this method
     public function userCollections()
     {
         $userId = Auth::id();

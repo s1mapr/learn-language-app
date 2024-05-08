@@ -49,5 +49,6 @@ Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\Wo
     Route::get('/public', 'getPublicCollections')->name('getPublicCollections')->middleware('auth:user');
     Route::get('/{id}', 'show')->name('show')->middleware('auth:user');
     Route::get('/{id}/quiz', 'getQuizForCollection')->name('getQuizForCollection');
+    Route::get('/{id}/flashCards', 'getFlashCardsForCollection')->name('getFlashCardsForCollection');
     Route::patch('/changeStatus/{id}', 'changeStatusOfCollection')->name('changeStatusOfCollection');
 });

@@ -4,11 +4,13 @@ namespace App\Http\Dto;
 
 class QuestionDto
 {
+    private $id;
     private $word;
     private $answers = [];
 
-    public function __construct($word)
+    public function __construct($id, $word)
     {
+        $this->id = $id;
         $this->word = $word;
     }
 
@@ -26,6 +28,7 @@ class QuestionDto
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'word' => $this->word,
             'answers' => array_map(function($answer) {
                 return $answer->toArray();
