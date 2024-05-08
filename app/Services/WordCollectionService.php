@@ -130,4 +130,9 @@ class WordCollectionService
         $wordCollection->save();
     }
 
+    public function getText()
+    {
+
+    }
+
 }

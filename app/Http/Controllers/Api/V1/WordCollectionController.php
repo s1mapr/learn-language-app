@@ -13,6 +13,7 @@ use App\Services\CommentService;
 use App\Services\UserWordCollectionService;
 use App\Services\WordCollectionService;
 use App\Traits\HttpResponseTrait;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 
 class WordCollectionController extends Controller
@@ -72,9 +73,9 @@ class WordCollectionController extends Controller
         $wordCollection['wordsCount'] = $wordsCount;
         $wordCollection['wordsLearned'] = $wordsLearned;
         $wordCollection['comments'] = $comments;
-        return $this->success([
+        return $this->success(
             new WordCollectionResource($wordCollection)
-        ]);
+        );
     }
 
     public function getRequestsForPublish()
@@ -83,7 +84,8 @@ class WordCollectionController extends Controller
         return $this->success(AdminViewCollectionResource::collection($collectionRequests));
     }
 
-    public function changeStatusOfCollection($id, ChangeCollectionStatusRequest $request){
+    public function changeStatusOfCollection($id, ChangeCollectionStatusRequest $request)
+    {
         $status = $request['status'];
         $collection = $this->wordCollectionService->changeCollectionStatus($id, $status);
         return $this->success($collection);
@@ -91,12 +93,18 @@ class WordCollectionController extends Controller
 
     public function createComment($id, StoreCommentRequest $request)
     {
-        $data= request()->all();
+        $data = request()->all();
         $data['word_collection_id'] = $id;
         return $this->commentService->createComment($data);
     }
 
-    public function getQuizForCollection($collectionId){
+    public function getTextForCollection()
+    {
+        return $this->success($this->wordCollectionService->getText());
+    }
+
+    public function getQuizForCollection($collectionId)
+    {
         return $this->success($this->wordCollectionService->getQuiz($collectionId));
     }
 
