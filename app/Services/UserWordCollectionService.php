@@ -34,13 +34,19 @@ class UserWordCollectionService
     public function getCountOfUserWords($words, $userId)
     {
         $count = 0;
-        $userWords= $this->userService->getUserById($userId)->words;
+        $userWords = $this->userService->getUserById($userId)->words;
         foreach ($words as $word) {
-            if($userWords->contains($word)){
+            if ($userWords->contains($word)) {
                 $count++;
             }
         }
         return $count;
+    }
+
+    public function checkIfUserHasCollection($userId, $wordCollectionId)
+    {
+        $userWordCollection = $this->userWordCollectionRepository->getUserWordCollectionByUserIdAndCollectionId($userId, $wordCollectionId);
+        return $userWordCollection !== null;
     }
 //    public function setOrUnsetCollectionInFavorites($userId, $collectionId)
 //    {

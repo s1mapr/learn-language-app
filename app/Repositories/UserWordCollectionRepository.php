@@ -36,6 +36,13 @@ class UserWordCollectionRepository
             'user_id' => $userId,
             'word_collection_id' => $collectionId
         ];
-        UserWordCollection::create($data);
+        UserWordCollection::firstOrCreate($data);
+    }
+
+    public function getUserWordCollectionByUserIdAndCollectionId($userId, $wordCollectionId)
+    {
+        return UserWordCollection::where('user_id', $userId)
+            ->where('word_collection_id', $wordCollectionId)
+            ->first();
     }
 }

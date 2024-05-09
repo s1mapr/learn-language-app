@@ -57,6 +57,7 @@ class WordCollectionController extends Controller
             $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
             $wordCollection['wordsCount'] = $wordsCount;
             $wordCollection['wordsLearned'] = $wordsLearned;
+            $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
         }
         return $this->success(WordCollectionResource::collection($wordCollections));
     }
@@ -73,6 +74,7 @@ class WordCollectionController extends Controller
         $wordCollection['wordsCount'] = $wordsCount;
         $wordCollection['wordsLearned'] = $wordsLearned;
         $wordCollection['comments'] = $comments;
+        $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
         return $this->success(
             new WordCollectionResource($wordCollection)
         );

@@ -43,7 +43,14 @@ class UserController extends Controller
     public function startCollection($collectionId){
         $userId = Auth::id();
         $this->userWordCollectionService->startCollection($userId, $collectionId);
-        return $this->success('', "collection successfully started");
+        $collection = $this->wordCollectionService->getWordCollectionById($collectionId);
+        $words = $collection->words;
+        $wordsCount = count($words);
+        $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
+        $collection['wordsCount'] = $wordsCount;
+        $collection['wordsLearned'] = $wordsLearned;
+        $collection['isStarted'] = true;
+        return $this->success(new WordCollectionResource($collection), "collection successfully started");
     }
 
 
@@ -59,6 +66,7 @@ class UserController extends Controller
             $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
             $wordCollection['wordsCount'] = $wordsCount;
             $wordCollection['wordsLearned'] = $wordsLearned;
+            $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
         }
         return $this->success(WordCollectionResource::collection($wordCollections));
     }

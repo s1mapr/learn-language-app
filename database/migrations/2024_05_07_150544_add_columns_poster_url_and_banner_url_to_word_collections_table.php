@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('word_collections', function (Blueprint $table) {
-            $table->string('poster_url')->nullable()->after('name')->default('https://i.pinimg.com/736x/00/a7/81/00a781cc93f26bc0b753e18b240673e2.jpg');
-            $table->string('banner_url')->nullable()->after('poster_url')->default('https://images-cdn.ubuy.co.in/633ff1157e3fbc25557517c8-one-piece-poster-japanese-anime-posters.jpg');
+            $table->string('poster_url')->nullable()->after('name')->default('https://images-cdn.ubuy.co.in/633ff1157e3fbc25557517c8-one-piece-poster-japanese-anime-posters.jpg');
+            $table->string('banner_url')->nullable()->after('poster_url')->default('https://i.pinimg.com/736x/00/a7/81/00a781cc93f26bc0b753e18b240673e2.jpg');
         });
     }
 

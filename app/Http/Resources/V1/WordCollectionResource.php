@@ -25,6 +25,7 @@ class WordCollectionResource extends JsonResource
             'views'=>$this->views,
             'wordsCount'=>$this->wordsCount,
             'wordsLearned'=>$this->wordsLearned,
+            'isStarted' => $this->isStarted,
             'comments'=>CommentResource::collection($this->comments)
         ];
     }
