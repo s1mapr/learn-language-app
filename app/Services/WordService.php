@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Word;
 use App\Repositories\WordRepository;
+use Google\Cloud\Translate\V2\TranslateClient;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class WordService
@@ -18,9 +19,13 @@ class WordService
 
     public function saveWord($word)
     {
-        $translator = new GoogleTranslate();
-        $translatedWord = $translator->setSource('en')->setTarget('uk')->translate($word['word']);
-        $word['translation_uk'] = $translatedWord;
+        $translate = new TranslateClient([
+            'key' => env('GOOGLE_API_KEY'),
+        ]);
+        $translatedWord = $translate->translate($word['word'], [
+            'target' => 'uk'
+        ]);
+        $word['translation_uk'] = $translatedWord['text'];
         return $this->wordRepository->saveWord($word);
     }
 

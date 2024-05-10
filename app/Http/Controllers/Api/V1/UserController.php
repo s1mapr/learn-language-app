@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         $userId = Auth::id();
         $user = $this->userService->getUserById($userId);
-        $wordCollections = $user->wordCollections;
+        $wordCollections = $user->wordCollections()->paginate(10);
         foreach ($wordCollections as $wordCollection) {
             $words = $wordCollection->words;
             $wordsCount = count($words);
@@ -68,7 +68,7 @@ class UserController extends Controller
             $wordCollection['wordsLearned'] = $wordsLearned;
             $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
         }
-        return $this->success(WordCollectionResource::collection($wordCollections));
+        return $this->success($wordCollections);
     }
 
     public function getUserWords(){

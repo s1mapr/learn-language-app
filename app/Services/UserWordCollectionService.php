@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\UserWordCollection;
 use App\Repositories\UserWordCollectionRepository;
 
 class UserWordCollectionService
@@ -47,6 +48,12 @@ class UserWordCollectionService
     {
         $userWordCollection = $this->userWordCollectionRepository->getUserWordCollectionByUserIdAndCollectionId($userId, $wordCollectionId);
         return $userWordCollection !== null;
+    }
+
+    public function getAuthorIdOfCollection($wordCollectionId)
+    {
+        $author = $this->userWordCollectionRepository->getAuthorOfCollection($wordCollectionId);
+        return $author->user_id;
     }
 //    public function setOrUnsetCollectionInFavorites($userId, $collectionId)
 //    {

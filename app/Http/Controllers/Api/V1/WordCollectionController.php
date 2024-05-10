@@ -7,13 +7,15 @@ use App\Http\Requests\V1\ChangeCollectionStatusRequest;
 use App\Http\Requests\V1\StoreCommentRequest;
 use App\Http\Requests\V1\StoreWordCollectionRequest;
 use App\Http\Resources\V1\AdminViewCollectionResource;
+use App\Http\Resources\V1\CommentResource;
+use App\Http\Resources\V1\TextResource;
 use App\Http\Resources\V1\WordCollectionResource;
 use App\Http\Resources\V1\WordResource;
 use App\Services\CommentService;
 use App\Services\UserWordCollectionService;
 use App\Services\WordCollectionService;
 use App\Traits\HttpResponseTrait;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class WordCollectionController extends Controller
@@ -31,9 +33,10 @@ class WordCollectionController extends Controller
         $this->commentService = $commentService;
     }
 
-    public function index()
+    public function getAllWordCollections()
     {
-        return $this->wordCollectionService->getAllWordCollections();
+        $wordCollections = $this->wordCollectionService->getAllWordCollections();
+        return $this->success(AdminViewCollectionResource::collection($wordCollections));
     }
 
     public function store(StoreWordCollectionRequest $request)
@@ -95,14 +98,20 @@ class WordCollectionController extends Controller
 
     public function createComment($id, StoreCommentRequest $request)
     {
+        $userId = Auth::id();
         $data = request()->all();
         $data['word_collection_id'] = $id;
-        return $this->commentService->createComment($data);
+        $data['user_id'] = $userId;
+        return $this->success(new CommentResource($this->commentService->createComment($data)));
     }
 
-    public function getTextForCollection()
+    public function getTextForCollection($collectionId)
     {
-        return $this->success($this->wordCollectionService->getText());
+        $wordCollection = $this->wordCollectionService->getWordCollectionById($collectionId);
+        return $this->success([
+            'text'=>new TextResource($wordCollection->text),
+            'words'=>WordResource::collection($wordCollection->words)
+        ]);
     }
 
     public function getQuizForCollection($collectionId)

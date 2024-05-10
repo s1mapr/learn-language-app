@@ -29,11 +29,25 @@ class WordCollectionService
     {
         try {
             Db::beginTransaction();
+            $path = 'https://empat-final-project-pictures.s3.amazonaws.com/';
             $words = $this->parseText($data['text']);
             $wordIds = $this->createWordsAndGetIds($words);
             $createdText = $this->textService->saveText(['text' => $data['text']]);
-            $newData = ['name' => $data['name'], 'text_id' => $createdText['id'], 'status' => $data['status']];
+            $newData = [
+                'name' => $data['name'],
+                'text_id' => $createdText['id'],
+                'status' => $data['status']
+            ];
             $wordCollection = $this->wordCollectionRepository->createCollection($newData);
+            if (isset($data['banner']) && isset($data['poster'])) {
+                $bannerUrl = $path . $data['banner']->storeAs('public/banners', 'banner' . $wordCollection->id . '.jpg');
+                $posterUrl = $path . $data['poster']->storeAs('public/posters', 'poster' . $wordCollection->id . '.jpg');
+                $imagesData = [
+                    'poster_url' => $posterUrl,
+                    'banner_url' => $bannerUrl
+                ];
+                $wordCollection = $this->updateCollection($wordCollection->id, $imagesData);
+            }
             $wordCollection->words()->attach($wordIds);
             Db::commit();
             return $wordCollection;
@@ -126,13 +140,17 @@ class WordCollectionService
 
     private function addView($wordCollection)
     {
-        $wordCollection->views +=1;
+        $wordCollection->views += 1;
         $wordCollection->save();
     }
 
     public function getText()
     {
+    }
 
+    public function updateCollection($collectionId, $data)
+    {
+        return $this->wordCollectionRepository->updateCollection($collectionId, $data);
     }
 
 }

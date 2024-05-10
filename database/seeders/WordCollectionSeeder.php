@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Services\UserWordCollectionService;
 use App\Services\WordCollectionService;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -10,13 +11,15 @@ class WordCollectionSeeder extends Seeder
 {
 
     private WordCollectionService $wordCollection;
+    private UserWordCollectionService $userWordCollectionService;
 
     /**
      * @param WordCollectionService $wordCollection
      */
-    public function __construct(WordCollectionService $wordCollection)
+    public function __construct(WordCollectionService $wordCollection, UserWordCollectionService $userWordCollectionService)
     {
         $this->wordCollection = $wordCollection;
+        $this->userWordCollectionService = $userWordCollectionService;
     }
 
 
@@ -37,7 +40,11 @@ class WordCollectionSeeder extends Seeder
             'status'=>'public',
             'userId'=>1,
         ];
-        $this->wordCollection->createWordCollection($categoryData1);
-        $this->wordCollection->createWordCollection($categoryData2);
+        $wordCollection1 = $this->wordCollection->createWordCollection($categoryData1);
+        $wordCollection2 = $this->wordCollection->createWordCollection($categoryData2);
+        $this->userWordCollectionService->startCollection($categoryData1['userId'], $wordCollection1->id);
+        $this->userWordCollectionService->makeUserAuthorOfCollection($categoryData1['userId'], $wordCollection1->id);
+        $this->userWordCollectionService->startCollection($categoryData2['userId'], $wordCollection2->id);
+        $this->userWordCollectionService->makeUserAuthorOfCollection($categoryData2['userId'], $wordCollection2->id);
     }
 }

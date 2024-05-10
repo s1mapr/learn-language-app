@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\TextRepository;
+use Google\Cloud\Translate\V2\TranslateClient;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class TextService
@@ -17,9 +18,13 @@ class TextService
 
 
     public function saveText($text){
-        $translator = new GoogleTranslate();
-        $translatedText = $translator->setSource('en')->setTarget('uk')->translate($text['text']);
-        $text['translation_uk'] = $translatedText;
+        $translate = new TranslateClient([
+            'key' => env('GOOGLE_API_KEY'),
+        ]);
+        $translatedText = $translate->translate($text['text'], [
+            'target' => 'uk'
+        ]);
+        $text['translation_uk'] = $translatedText['text'];
         return $this->textRepository->saveText($text);
     }
 

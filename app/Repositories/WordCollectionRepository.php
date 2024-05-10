@@ -15,12 +15,12 @@ class WordCollectionRepository
     }
 
     public function getPublicCollections(){
-        return WordCollection::where('status', 'public')->get();
+        return WordCollection::where('status', 'public')->paginate(10);
     }
 
     public function getAllWordCollections()
     {
-        return WordCollection::with('text')->get();
+        return WordCollection::with('text')->paginate(10);
     }
 
     public function getRequestsForPublish()
@@ -37,6 +37,15 @@ class WordCollectionRepository
         $wordCollection['status'] = $status;
         $wordCollection->update($wordCollection->toArray());
 
+        return $wordCollection;
+    }
+
+    public function updateCollection($id, $date){
+        $wordCollection = WordCollection::find($id);
+        if (!$wordCollection) {
+            return null;
+        }
+        $wordCollection->update($date);
         return $wordCollection;
     }
 

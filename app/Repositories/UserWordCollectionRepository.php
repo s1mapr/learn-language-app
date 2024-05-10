@@ -45,4 +45,12 @@ class UserWordCollectionRepository
             ->where('word_collection_id', $wordCollectionId)
             ->first();
     }
+
+    public function getAuthorOfCollection($wordCollectionId)
+    {
+        return UserWordCollection::where("word_collection_id", $wordCollectionId)
+            ->where("is_author", true)
+            ->first();
+    }
+
 }

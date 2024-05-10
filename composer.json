@@ -6,9 +6,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "google/cloud-translate": "^1.17",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "stichoza/google-translate-php": "^5.1"
     },
     "require-dev": {

@@ -23,13 +23,12 @@ class StoreWordCollectionRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
+            'color'=>['required', 'string'],
             'text' => ['required', 'string'],
-            'status' => ['required', 'string', function ($attribute, $value, $fail) {
-                if (!in_array($value, ['private', 'pending', 'public'])) {
-                    $fail('The ' . $attribute . ' is invalid.');
-                }
-            }],
+            'status' => ['required', 'string', 'in:private,pending,public'],
             'userId' => ['int', 'exists:users,id'],
+            'banner' => ['file'],
+            'poster' => ['file'],
         ];
     }
 }

@@ -11,6 +11,7 @@ class WordCollection extends Model
 
     protected $fillable = [
         'name',
+        'color',
         'banner_url',
         'poster_url',
         'status',
