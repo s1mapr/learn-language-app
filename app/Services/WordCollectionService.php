@@ -9,6 +9,7 @@ use App\Http\Dto\QuizDto;
 use App\Repositories\WordCollectionRepository;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Promise\Utils;
+use Illuminate\Http\Client\Pool;
 
 class WordCollectionService
 {
@@ -118,27 +119,32 @@ class WordCollectionService
         $wordCount = count($allWords);
         $quiz = new QuizDto();
         $wordId = 1;
-        $promises = [];
-        foreach ($collectionWords as $word) {
-            $promises[] = Http::withHeaders([
-                'Authorization' => 'yE2FB6GoTweWTRDOW6p0hvXKE1tZjgMyt2tEDkSdX7NyOhMdopbWTXAl',
-            ])->async()->get('https://api.pexels.com/v1/search?query='. $word['word']);
-        }
-        $responses = Utils::unwrap($promises);
+        $responses = Http::pool(function (Pool $pool) use ($collectionWords) {
+            foreach ($collectionWords as $word) {
+                $pool->get('https://api.pexels.com/v1/search?query=' . $word['word'], [
+                    'headers' => [
+                        'Authorization' => 'yE2FB6GoTweWTRDOW6p0hvXKE1tZjgMyt2tEDkSdX7NyOhMdopbWTXAl',
+                    ]
+                ]);
+            }
+        });
+
         $imges = [];
+
         foreach ($responses as $response) {
             $jsonData = $response->getBody()->getContents();
             $data = json_decode($jsonData, true);
             $imges[] = $data['photos'][0]['src']['medium'];
         }
+
         for ($i = 0; $i < count($collectionWords); $i++) {
-            $question = new QuestionDto($wordId++, $word['word'], $imges[$i]);
-            $question->setAnswers(new AnswerDto(1, $word['translation_uk'], true));
+            $question = new QuestionDto($wordId++, $collectionWords[$i]  , $imges[$i]);
+            $question->setAnswers(new AnswerDto(1, $collectionWords[$i]['translation_uk'], true));
             for ($i = 2; $i <= 4; $i++) {
                 $randomId = rand(0, $wordCount - 1);
                 $randomWord = $allWords[$randomId];
                 $isAnswer = false;
-                if ($randomWord['word'] == $word['word']) {
+                if ($randomWord['word'] == $collectionWords[$i]['word']) {
                     $isAnswer = true;
                 }
                 $question->setAnswers(new AnswerDto($i, $randomWord['translation_uk'], $isAnswer));
