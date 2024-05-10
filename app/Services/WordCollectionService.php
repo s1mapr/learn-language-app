@@ -13,16 +13,19 @@ class WordCollectionService
     private WordCollectionRepository $wordCollectionRepository;
     private WordService $wordService;
     private TextService $textService;
+    private PexelsService $pexelsService;
 
 
     public function __construct(WordCollectionRepository $wordCollectionRepository,
                                 WordService              $wordService,
                                 TextService              $textService,
+                                PexelsService            $pexelsService
     )
     {
         $this->wordCollectionRepository = $wordCollectionRepository;
         $this->wordService = $wordService;
         $this->textService = $textService;
+        $this->pexelsService = $pexelsService;
     }
 
     public function createWordCollection($data)
@@ -114,7 +117,8 @@ class WordCollectionService
         $quiz = new QuizDto();
         $wordId = 1;
         foreach ($collectionWords as $word) {
-            $question = new QuestionDto($wordId++, $word['word']);
+            $url = $this->pexelsService->getPhoto($word['word']);
+            $question = new QuestionDto($wordId++, $word['word'], $url);
             $question->setAnswers(new AnswerDto(1, $word['translation_uk'], true));
             for ($i = 2; $i <= 4; $i++) {
                 $randomId = rand(0, $wordCount - 1);

@@ -6,12 +6,14 @@ class QuestionDto
 {
     private $id;
     private $word;
+    private $pictureUrl;
     private $answers = [];
 
-    public function __construct($id, $word)
+    public function __construct($id, $word, $pictureUrl)
     {
         $this->id = $id;
         $this->word = $word;
+        $this->pictureUrl = $pictureUrl;
     }
 
 
@@ -30,6 +32,7 @@ class QuestionDto
         return [
             'id' => $this->id,
             'word' => $this->word,
+            'pictureUrl' => $this->pictureUrl,
             'answers' => array_map(function($answer) {
                 return $answer->toArray();
             }, $this->answers),

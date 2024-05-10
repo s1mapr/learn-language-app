@@ -26,10 +26,6 @@ Route::prefix('/v1/words')->name('words.')->controller(Controllers\WordControlle
     Route::post('/', 'store')->name('store');
 });
 
-Route::prefix('/v1/test')->name('test.')->controller(Controllers\TestController::class)->group(function () {
-
-    Route::get('/', 'index')->name('index');
-});
 
 Route::prefix('/v1/texts')->name('texts.')->controller(Controllers\TextController::class)->group(function () {
 
@@ -47,7 +43,6 @@ Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserControlle
 });
 
 Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\WordCollectionController::class)->group(function () {
-
     Route::post('/', 'store')->name('store');
     Route::post('/{id}/comment', 'createComment')->name('comment')->middleware(['auth:user']);
     Route::get('/', 'getAllWordCollections')->name('getAllWordCollections');
