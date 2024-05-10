@@ -8,6 +8,7 @@ use App\Http\Requests\V1\StoreCommentRequest;
 use App\Http\Requests\V1\StoreWordCollectionRequest;
 use App\Http\Resources\V1\AdminViewCollectionResource;
 use App\Http\Resources\V1\CommentResource;
+use App\Http\Resources\V1\FlashCardResource;
 use App\Http\Resources\V1\TextResource;
 use App\Http\Resources\V1\WordCollectionResource;
 use App\Http\Resources\V1\WordResource;
@@ -121,7 +122,7 @@ class WordCollectionController extends Controller
 
     public function getFlashCardsForCollection($collectionId)
     {
-        return $this->success(WordResource::collection($this->wordCollectionService->flashCards($collectionId)));
+        return $this->success(FlashCardResource::collection($this->wordCollectionService->flashCards($collectionId)));
     }
 
 }

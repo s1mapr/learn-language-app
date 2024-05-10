@@ -6,6 +6,7 @@ class AnswerDto
 {
     private $id;
     private $translation;
+    private $pictureUrl = 'https://storage.googleapis.com/pod_public/1300/165117.jpg';
     private $isAnswer;
 
     public function __construct($id, $translation, $isAnswer)
@@ -19,6 +20,7 @@ class AnswerDto
     {
         return [
             'id' => $this->id,
+            'pictureUrl' => $this->pictureUrl,
             'translation' => $this->translation,
             'isAnswer' => $this->isAnswer,
         ];
