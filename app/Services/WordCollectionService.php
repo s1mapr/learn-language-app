@@ -121,11 +121,9 @@ class WordCollectionService
         $wordId = 1;
         $responses = Http::pool(function (Pool $pool) use ($collectionWords) {
             foreach ($collectionWords as $word) {
-                $pool->get('https://api.pexels.com/v1/search?query=' . $word['word'], [
-                    'headers' => [
-                        'Authorization' => 'yE2FB6GoTweWTRDOW6p0hvXKE1tZjgMyt2tEDkSdX7NyOhMdopbWTXAl',
-                    ]
-                ]);
+                $pool->withHeaders([
+                    'Authorization' => 'yE2FB6GoTweWTRDOW6p0hvXKE1tZjgMyt2tEDkSdX7NyOhMdopbWTXAl',
+                ])->get('https://api.pexels.com/v1/search?query=' . $word['word']);
             }
         });
 
