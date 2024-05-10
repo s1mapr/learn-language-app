@@ -7,6 +7,7 @@ use App\Http\Dto\QuestionDto;
 use App\Http\Dto\QuizDto;
 use App\Repositories\WordCollectionRepository;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Promise\Utils;
 
 class WordCollectionService
 {
@@ -116,9 +117,13 @@ class WordCollectionService
         $wordCount = count($allWords);
         $quiz = new QuizDto();
         $wordId = 1;
+        $promises = [];
         foreach ($collectionWords as $word) {
-            $url = $this->pexelsService->getPhoto($word['word']);
-            $question = new QuestionDto($wordId++, $word['word'], $url);
+            $promises[] = $this->pexelsService->getPhoto($word['word']);
+        }
+        $responses = Utils::unwrap($promises);
+        for ($i = 0; $i < count($collectionWords); $i++) {
+            $question = new QuestionDto($wordId++, $word['word'], $responses[$i]);
             $question->setAnswers(new AnswerDto(1, $word['translation_uk'], true));
             for ($i = 2; $i <= 4; $i++) {
                 $randomId = rand(0, $wordCount - 1);
