@@ -14,8 +14,10 @@ class WordCollectionRepository
         return WordCollection::create($data);
     }
 
-    public function getPublicCollections(){
-        return WordCollection::where('status', 'public')->paginate(10);
+    public function getPublicCollections($searchQuery){
+        return WordCollection::where('status', 'public')
+            ->where('name', 'like', '%'.$searchQuery.'%')
+            ->paginate(10);
     }
 
     public function getAllWordCollections()
@@ -48,6 +50,5 @@ class WordCollectionRepository
         $wordCollection->update($date);
         return $wordCollection;
     }
-
 
 }

@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WordCollectionResource extends JsonResource
+class PublicWordCollectionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,7 +24,6 @@ class WordCollectionResource extends JsonResource
             'wordsCount'=>$this->wordsCount,
             'wordsLearned'=>$this->wordsLearned,
             'isStarted' => $this->isStarted,
-            'comments'=>CommentResource::collection($this->comments)
         ];
     }
 }

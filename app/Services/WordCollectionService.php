@@ -58,9 +58,9 @@ class WordCollectionService
     }
 
 
-    public function getPublicCollections()
+    public function getPublicCollections($searchQuery)
     {
-        return $this->wordCollectionRepository->getPublicCollections();
+        return $this->wordCollectionRepository->getPublicCollections($searchQuery);
     }
 
     private function parseText($text)

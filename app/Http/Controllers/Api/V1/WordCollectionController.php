@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ChangeCollectionStatusRequest;
+use App\Http\Requests\V1\SearchCollectionRequest;
 use App\Http\Requests\V1\StoreCommentRequest;
 use App\Http\Requests\V1\StoreWordCollectionRequest;
 use App\Http\Resources\V1\AdminViewCollectionResource;
 use App\Http\Resources\V1\CommentResource;
 use App\Http\Resources\V1\FlashCardResource;
+use App\Http\Resources\V1\PublicWordCollectionResource;
+use App\Http\Resources\V1\StoredWordCollectionResource;
 use App\Http\Resources\V1\TextResource;
 use App\Http\Resources\V1\WordCollectionResource;
 use App\Http\Resources\V1\WordResource;
@@ -16,7 +19,6 @@ use App\Services\CommentService;
 use App\Services\UserWordCollectionService;
 use App\Services\WordCollectionService;
 use App\Traits\HttpResponseTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class WordCollectionController extends Controller
@@ -47,13 +49,14 @@ class WordCollectionController extends Controller
         $wordCollectionId = $wordCollection['id'];
         $this->userWordCollectionService->startCollection($userId, $wordCollectionId);
         $this->userWordCollectionService->makeUserAuthorOfCollection($userId, $wordCollectionId);
-        return response()->json($wordCollection, 200);
+        return $this->success(new StoredWordCollectionResource($wordCollection));
     }
 
     //todo refactor this method
-    public function getPublicCollections()
+    public function getPublicCollections(SearchCollectionRequest $request)
     {
-        $wordCollections = $this->wordCollectionService->getPublicCollections();
+        $searchQuery = $request['query'];
+        $wordCollections = $this->wordCollectionService->getPublicCollections($searchQuery);
         $userId = Auth::id();
         foreach ($wordCollections as $wordCollection) {
             $words = $wordCollection->words;
@@ -63,8 +66,16 @@ class WordCollectionController extends Controller
             $wordCollection['wordsLearned'] = $wordsLearned;
             $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
         }
-        return $this->success(WordCollectionResource::collection($wordCollections));
+        return $this->success(
+            [
+                'currentPage' => $wordCollections->currentPage(),
+                'lastPage' => $wordCollections->lastPage(),
+                'size'=>$wordCollections->total(),
+                'data' => WordCollectionResource::collection($wordCollections),
+            ]
+        );
     }
+
 
 
     public function show($id)
@@ -110,8 +121,8 @@ class WordCollectionController extends Controller
     {
         $wordCollection = $this->wordCollectionService->getWordCollectionById($collectionId);
         return $this->success([
-            'text'=>new TextResource($wordCollection->text),
-            'words'=>WordResource::collection($wordCollection->words)
+            'text' => new TextResource($wordCollection->text),
+            'words' => WordResource::collection($wordCollection->words)
         ]);
     }
 

@@ -18,7 +18,6 @@ class FlashCardResource extends JsonResource
             'id'=>$this->id,
             'word'=>$this->word,
             'translationUk'=>$this->translation_uk,
-            'pictureUrl'=>'https://storage.googleapis.com/pod_public/1300/165117.jpg'
         ];
     }
 }

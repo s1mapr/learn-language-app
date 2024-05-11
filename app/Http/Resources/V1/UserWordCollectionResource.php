@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TextResource extends JsonResource
+class UserWordCollectionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,12 @@ class TextResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id,
-            'text'=>$this->text,
-            'translationUk'=>$this->translation_uk,
+            'id' => $this->id,
+            'name' => $this->name,
+            'posterUrl' => $this->poster_url,
+            'bannerUrl' => $this->banner_url,
+            'wordsCount' => $this->wordsCount,
+            'wordsLearned' => $this->wordsLearned,
         ];
     }
 }

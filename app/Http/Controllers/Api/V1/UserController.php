@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\SearchCollectionRequest;
 use App\Http\Resources\V1\UserResource;
+use App\Http\Resources\V1\UserWordCollectionResource;
 use App\Http\Resources\V1\WordCollectionResource;
 use App\Http\Resources\V1\WordResource;
 use App\Services\UserService;
@@ -28,7 +30,8 @@ class UserController extends Controller
         $this->wordCollectionService = $wordCollectionService;
     }
 
-    public function index(){
+    public function index()
+    {
         $user = $this->userService->getAllUsers();
         return UserResource::collection($user);
     }
@@ -40,7 +43,8 @@ class UserController extends Controller
         return $this->success(new UserResource($user));
     }
 
-    public function startCollection($collectionId){
+    public function startCollection($collectionId)
+    {
         $userId = Auth::id();
         $this->userWordCollectionService->startCollection($userId, $collectionId);
         $collection = $this->wordCollectionService->getWordCollectionById($collectionId);
@@ -55,11 +59,14 @@ class UserController extends Controller
 
 
     //todo refactor this method
-    public function userCollections()
+    public function userCollections(SearchCollectionRequest $request)
     {
+        $searchQuery = $request->get('query');
         $userId = Auth::id();
         $user = $this->userService->getUserById($userId);
-        $wordCollections = $user->wordCollections()->paginate(10);
+        $wordCollections = $user->wordCollections()
+            ->where('name', 'like', '%' . $searchQuery . '%')
+            ->paginate(10);
         foreach ($wordCollections as $wordCollection) {
             $words = $wordCollection->words;
             $wordsCount = count($words);
@@ -68,10 +75,16 @@ class UserController extends Controller
             $wordCollection['wordsLearned'] = $wordsLearned;
             $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
         }
-        return $this->success($wordCollections);
+        return $this->success([
+            'currentPage' => $wordCollections->currentPage(),
+            'lastPage' => $wordCollections->lastPage(),
+            'size'=>$wordCollections->total(),
+            'data' => WordCollectionResource::collection($wordCollections),
+        ]);
     }
 
-    public function getUserWords(){
+    public function getUserWords()
+    {
         $userId = Auth::id();
         $user = $this->userService->getUserById($userId);
         return $this->success(WordResource::collection($user->words));
