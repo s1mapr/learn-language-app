@@ -23,6 +23,7 @@ class StoredWordCollectionResource extends JsonResource
             'bannerUrl'=>$this->banner_url,
             'wordsCount'=>$this->wordsCount,
             'wordsLearned'=>$this->wordsLearned,
+            'isStarted'=>$this->isStarted,
             'color'=>$this->color,
         ];
     }
