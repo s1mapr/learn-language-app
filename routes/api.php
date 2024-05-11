@@ -19,24 +19,6 @@ Route::prefix('/v1/auth')->name('auth.')->controller(Controllers\AuthController:
 
 });
 
-Route::prefix('/v1/words')->name('words.')->controller(Controllers\WordController::class)->group(function () {
-
-    Route::get('/', 'index')->name('index');
-
-    Route::post('/', 'store')->name('store');
-});
-
-Route::prefix('/v1/test')->name('test.')->controller(Controllers\TestController::class)->group(function () {
-
-    Route::get('/', 'index')->name('index');
-});
-
-Route::prefix('/v1/texts')->name('texts.')->controller(Controllers\TextController::class)->group(function () {
-
-    Route::get('/{id}', 'show')->name('show');
-    Route::post('/', 'store')->name('store');
-
-});
 
 Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserController::class)->group(function () {
     Route::get('/', 'index')->name('index');
