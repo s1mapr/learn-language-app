@@ -81,6 +81,7 @@ class UserController extends Controller
             $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
             $wordCollection['wordsCount'] = $wordsCount;
             $wordCollection['wordsLearned'] = $wordsLearned;
+            $wordCollection['isLiked'] = $this->userWordCollectionService->checkIfUserLikedCollection($userId, $wordCollection->id);
             $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
         }
         return $this->success([
@@ -105,6 +106,16 @@ class UserController extends Controller
 
     public function blockOrUnblockUser($id){
         $this->userService->blockOrUnblockUser($id);
+        return $this->success('','user status  successfully changed');
+    }
+
+    public function likeOrUnlikeCollection($collectionId){
+        $userId = Auth::id();
+        $userCollection = $this->userWordCollectionService->likeOrUnlikeCollection($userId, $collectionId);
+        if(!$userCollection){
+            return $this->error('','user don`t started collection');
+        }
+        return $this->success('','success');
     }
 
 }

@@ -53,4 +53,28 @@ class UserWordCollectionRepository
             ->first();
     }
 
+    public function likeOrUnlikeCollection($userId, $collectionId)
+    {
+        $userCollection = UserWordCollection::where('user_id', $userId)
+            ->where('word_collection_id', $collectionId)
+            ->first();
+        if(!$userCollection){
+            return null;
+        }
+        $userCollection->is_liked = !$userCollection->is_liked;
+        $userCollection->update($userCollection->toArray());
+        return $userCollection;
+    }
+
+    public function checkIfUserLikedCollection($userId, $wordCollectionId)
+    {
+        $userWordCollection = UserWordCollection::where("word_collection_id", $wordCollectionId)
+            ->where("user_id", $userId)
+            ->first();
+        if(!$userWordCollection){
+            return false;
+        }
+        return $userWordCollection->is_liked;
+    }
+
 }

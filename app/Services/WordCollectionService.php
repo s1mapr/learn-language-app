@@ -151,4 +151,11 @@ class WordCollectionService
         return $this->wordCollectionRepository->updateCollection($collectionId, $data);
     }
 
+    public function likePublication($collectionId)
+    {
+        $wordCollection = $this->getWordCollectionById($collectionId);
+        $wordCollection->likes += 1;
+        $wordCollection->save();
+    }
+
 }

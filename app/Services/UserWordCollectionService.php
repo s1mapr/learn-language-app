@@ -59,5 +59,16 @@ class UserWordCollectionService
 //    {
 //        $this->userWordCollectionRepository->setOrUnsetCollectionInFavorites($userId, $collectionId);
 //    }
+    public function likeOrUnlikeCollection($userId, $collectionId)
+    {
+        $this->wordCollectionService->likePublication($collectionId);
+        return $this->userWordCollectionRepository->likeOrUnlikeCollection($userId, $collectionId);
+    }
+
+    public function checkIfUserLikedCollection($userId, $wordCollectionId)
+    {
+        $isLiked = $this->userWordCollectionRepository->checkIfUserLikedCollection($userId, $wordCollectionId);
+        return $isLiked;
+    }
 
 }

@@ -29,10 +29,11 @@ Route::prefix('/v1/words')->name('words.')->controller(Controllers\WordControlle
 Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/words', 'getUserWords')->name('getUserWords')->middleware('auth:user');
+    Route::get('/collections', 'userCollections')->name('userCollections')->middleware('auth:user');
     Route::get('/{id}', 'getUserById')->name('getUserById');
     Route::patch('/{id}', 'update')->name('update')->middleware(['auth:user,admin']);
     Route::patch('/{id}/blockOrUnblock', 'blockOrUnblockUser')->name('blockOrUnblockUser');
-    Route::get('/collections', 'userCollections')->name('userCollections')->middleware('auth:user');
+    Route::patch('/like/{id}', 'likeOrUnlikeCollection')->name('likeOrUnlikeCollection');
     Route::post('/startCollection/{collectionId}', 'startCollection')->name('startCollection')->middleware(['auth:user']);
 });
 
