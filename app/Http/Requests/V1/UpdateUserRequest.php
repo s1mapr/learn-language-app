@@ -4,7 +4,7 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWordCollectionRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,9 @@ class StoreWordCollectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'color'=>['required', 'string'],
-            'text' => ['required', 'string'],
-            'status' => ['required', 'string', 'in:private,pending,public'],
-            'banner' => ['file'],
-            'poster' => ['file'],
+            'name' => ['string', 'max:255'],
+            'surname' => ['string', 'max:255'],
+            'password' => ['string', 'min:8'],
         ];
     }
 }

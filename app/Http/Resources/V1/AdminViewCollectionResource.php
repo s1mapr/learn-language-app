@@ -20,7 +20,7 @@ class AdminViewCollectionResource extends JsonResource
             'text'=>$this->text->text,
             'translationUk'=>$this->text->translation_uk,
             'status'=>$this->status,
-            'userId'=>''
+            'userId'=>$this->userId,
         ];
     }
 }

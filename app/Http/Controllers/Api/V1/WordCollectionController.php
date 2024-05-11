@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\ChangeCollectionStatusRequest;
+use App\Http\Requests\V1\ChangeCollectionRequest;
 use App\Http\Requests\V1\SearchCollectionRequest;
 use App\Http\Requests\V1\StoreCommentRequest;
 use App\Http\Requests\V1\StoreWordCollectionRequest;
@@ -39,16 +39,24 @@ class WordCollectionController extends Controller
     public function getAllWordCollections()
     {
         $wordCollections = $this->wordCollectionService->getAllWordCollections();
+        foreach ($wordCollections as $wordCollection){
+            $wordCollection['userId'] = $this->userWordCollectionService->getAuthorIdOfCollection($wordCollection->id);
+        }
         return $this->success(AdminViewCollectionResource::collection($wordCollections));
     }
 
     public function store(StoreWordCollectionRequest $request)
     {
+        $userId = Auth::id();
         $wordCollection = $this->wordCollectionService->createWordCollection($request->all());
-        $userId = $request['userId'];
         $wordCollectionId = $wordCollection['id'];
         $this->userWordCollectionService->startCollection($userId, $wordCollectionId);
         $this->userWordCollectionService->makeUserAuthorOfCollection($userId, $wordCollectionId);
+        $words = $wordCollection->words;
+        $wordsCount = count($words);
+        $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
+        $wordCollection['wordsCount'] = $wordsCount;
+        $wordCollection['wordsLearned'] = $wordsLearned;
         return $this->success(new StoredWordCollectionResource($wordCollection));
     }
 
@@ -70,12 +78,11 @@ class WordCollectionController extends Controller
             [
                 'currentPage' => $wordCollections->currentPage(),
                 'lastPage' => $wordCollections->lastPage(),
-                'size'=>$wordCollections->total(),
+                'size' => $wordCollections->total(),
                 'data' => WordCollectionResource::collection($wordCollections),
             ]
         );
     }
-
 
 
     public function show($id)
@@ -101,11 +108,11 @@ class WordCollectionController extends Controller
         return $this->success(AdminViewCollectionResource::collection($collectionRequests));
     }
 
-    public function changeStatusOfCollection($id, ChangeCollectionStatusRequest $request)
+    public function changeCollection($id, ChangeCollectionRequest $request)
     {
-        $status = $request['status'];
-        $collection = $this->wordCollectionService->changeCollectionStatus($id, $status);
-        return $this->success($collection);
+        $data = $request->validated();
+        $this->wordCollectionService->changeCollection($id, $data);
+        return $this->success('', 'collection successfully changed');
     }
 
     public function createComment($id, StoreCommentRequest $request)

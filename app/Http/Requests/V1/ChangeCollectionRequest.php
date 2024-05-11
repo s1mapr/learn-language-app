@@ -4,7 +4,7 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeCollectionStatusRequest extends FormRequest
+class ChangeCollectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,21 @@ class ChangeCollectionStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', 'string', function ($attribute, $value, $fail) {
+            'name' => ['string'],
+            'text' => ['string'],
+            'translation_uk' => ['string'],
+            'status' => ['string', function ($attribute, $value, $fail) {
                 if (!in_array($value, ['private', 'public'])) {
                     $fail('The ' . $attribute . ' is invalid.');
                 }
             }],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if (isset($this->translationUk)) {
+            $this->merge(['translation_uk' => $this->translationUk]);
+        }
     }
 }

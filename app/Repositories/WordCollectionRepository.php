@@ -30,15 +30,13 @@ class WordCollectionRepository
         return WordCollection::where('status', 'pending')->with('text')->get();
     }
 
-    public function changeCollectionStatus($id, $status)
+    public function changeCollection($id, $data)
     {
         $wordCollection = WordCollection::find($id);
         if (!$wordCollection) {
             return null;
         }
-        $wordCollection['status'] = $status;
-        $wordCollection->update($wordCollection->toArray());
-
+        $wordCollection->update($data);
         return $wordCollection;
     }
 

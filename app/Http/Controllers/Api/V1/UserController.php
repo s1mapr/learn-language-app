@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SearchCollectionRequest;
+use App\Http\Requests\V1\UpdateUserRequest;
+use App\Http\Resources\V1\AdminViewUserResource;
 use App\Http\Resources\V1\UserResource;
 use App\Http\Resources\V1\UserWordCollectionResource;
 use App\Http\Resources\V1\WordCollectionResource;
@@ -32,13 +34,19 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = $this->userService->getAllUsers();
-        return UserResource::collection($user);
+        $users = $this->userService->getAllUsers();
+        return $this->success([
+            'currentPage' => $users->currentPage(),
+            'lastPage' => $users->lastPage(),
+            'size'=>$users->total(),
+            'users'=>AdminViewUserResource::collection($users)
+        ]);
     }
 
-    public function update($id, Request $request)
+    public function update($id, UpdateUserRequest $request)
     {
-        $data = $request->all();
+
+        $data = $request->validated();
         $user = $this->userService->updateUser($id, $data);
         return $this->success(new UserResource($user));
     }
@@ -90,5 +98,13 @@ class UserController extends Controller
         return $this->success(WordResource::collection($user->words));
     }
 
+    public function getUserById($id){
+        $user = $this->userService->getUserById($id);
+        return $this->success(new UserResource($user));
+    }
+
+    public function blockOrUnblockUser($id){
+        $this->userService->blockOrUnblockUser($id);
+    }
 
 }

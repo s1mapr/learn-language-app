@@ -36,7 +36,19 @@ class UserRepository
 
     public function getAllUsers()
     {
-        return User::all();
+        return User::paginate(10);
+    }
+
+    public function blockOrUnblockUser($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return null;
+        }
+        $user->is_blocked = !$user->is_blocked;
+        $user->update();
+        return $user;
     }
 
 }

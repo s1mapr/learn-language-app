@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StoredWordCollectionResource extends JsonResource
+class AdminViewUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,14 +16,10 @@ class StoredWordCollectionResource extends JsonResource
     {
         return [
             'id'=>$this->id,
+            'email'=>$this->email,
             'name'=>$this->name,
-            'status'=>$this->status,
-            'textId'=>$this->text_id,
-            'posterUrl'=>$this->poster_url,
-            'bannerUrl'=>$this->banner_url,
-            'wordsCount'=>$this->wordsCount,
-            'wordsLearned'=>$this->wordsLearned,
-            'color'=>$this->color,
+            'surname'=>$this->surname,
+            'isBlocked'=>$this->is_blocked,
         ];
     }
 }

@@ -17,6 +17,9 @@ class WordCollectionResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'text'=>$this->text->text,
+            'translationUk'=>$this->text->translation_uk,
+            'status'=>$this->status,
             'posterUrl'=>$this->poster_url,
             'bannerUrl'=>$this->banner_url,
             'likes'=>$this->likes,

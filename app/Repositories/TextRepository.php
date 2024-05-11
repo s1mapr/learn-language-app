@@ -17,4 +17,11 @@ class TextRepository
     public function getTextById($id){
         return Text::find($id);
     }
+
+    public function updateText($id, $data)
+    {
+        $text = $this->getTextById($id);
+        $text->fill($data);
+        $text->save();
+    }
 }

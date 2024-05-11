@@ -31,4 +31,8 @@ class TextService
     public function getTextById($id){
         return $this->textRepository->getTextById($id);
     }
+
+    public function updateText($id, $data){
+        $this->textRepository->updateText($id, $data);
+    }
 }

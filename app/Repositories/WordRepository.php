@@ -13,6 +13,6 @@ class WordRepository
 
     public function getAllWords()
     {
-        return Word::all();
+        return Word::paginate(10);
     }
 }

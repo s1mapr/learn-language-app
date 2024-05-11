@@ -100,9 +100,10 @@ class WordCollectionService
         return $this->wordCollectionRepository->getRequestsForPublish();
     }
 
-    public function changeCollectionStatus($id, mixed $status)
+    public function changeCollection($id, $data)
     {
-        return $this->wordCollectionRepository->changeCollectionStatus($id, $status);
+        $this->textService->updateText($id, $data);
+        $this->wordCollectionRepository->changeCollection($id, $data);
     }
 
     public function getQuiz($collectionId)
@@ -144,9 +145,6 @@ class WordCollectionService
         $wordCollection->save();
     }
 
-    public function getText()
-    {
-    }
 
     public function updateCollection($collectionId, $data)
     {

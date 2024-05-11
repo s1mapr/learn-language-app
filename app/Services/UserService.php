@@ -37,4 +37,9 @@ class UserService
     {
         return $this->userRepository->getAllUsers();
     }
+
+    public function blockOrUnblockUser($id)
+    {
+        return $this->userRepository->blockOrUnblockUser($id);
+    }
 }
