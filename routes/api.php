@@ -39,7 +39,7 @@ Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserControlle
 
 Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\WordCollectionController::class)->group(function () {
 
-    Route::post('/', 'store')->name('store');
+    Route::post('/', 'store')->name('store')->middleware(['auth:user']);
     Route::post('/{id}/comment', 'createComment')->name('comment')->middleware(['auth:user']);
     Route::get('/', 'getAllWordCollections')->name('getAllWordCollections');
     Route::get('/requests', 'getRequestsForPublish')->name('getRequestsForPublish');

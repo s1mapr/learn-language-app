@@ -20,14 +20,19 @@ class WordCollectionRepository
             ->paginate(10);
     }
 
-    public function getAllWordCollections()
+    public function getAllWordCollections($searchQuery)
     {
-        return WordCollection::with('text')->paginate(10);
+        return WordCollection::with('text')
+            ->where('name', 'like', '%'.$searchQuery.'%')
+            ->paginate(10);
     }
 
-    public function getRequestsForPublish()
+    public function getRequestsForPublish($searchQuery)
     {
-        return WordCollection::where('status', 'pending')->with('text')->get();
+        return WordCollection::where('status', 'pending')
+            ->where('name', 'like', '%'.$searchQuery.'%')
+            ->with('text')
+            ->paginate(10);
     }
 
     public function changeCollection($id, $data)

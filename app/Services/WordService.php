@@ -29,7 +29,7 @@ class WordService
         return $this->wordRepository->saveWord($word);
     }
 
-    public function getAllWords(){
-        return $this->wordRepository->getAllWords();
+    public function getAllWords($query){
+        return $this->wordRepository->getAllWords($query);
     }
 }

@@ -36,9 +36,10 @@ class WordCollectionController extends Controller
         $this->commentService = $commentService;
     }
 
-    public function getAllWordCollections()
+    public function getAllWordCollections(SearchCollectionRequest $request)
     {
-        $wordCollections = $this->wordCollectionService->getAllWordCollections();
+        $searchQuery = $request['query'];
+        $wordCollections = $this->wordCollectionService->getAllWordCollections($searchQuery);
         foreach ($wordCollections as $wordCollection){
             $wordCollection['userId'] = $this->userWordCollectionService->getAuthorIdOfCollection($wordCollection->id);
         }
@@ -105,10 +106,19 @@ class WordCollectionController extends Controller
         );
     }
 
-    public function getRequestsForPublish()
+    public function getRequestsForPublish(SearchCollectionRequest $request)
     {
-        $collectionRequests = $this->wordCollectionService->getRequestsForPublish();
-        return $this->success(AdminViewCollectionResource::collection($collectionRequests));
+        $searchQuery = $request['query'];
+        $collectionRequests = $this->wordCollectionService->getRequestsForPublish($searchQuery);
+        foreach ($collectionRequests as $collectionRequest){
+            $collectionRequest['userId'] = $this->userWordCollectionService->getAuthorIdOfCollection($collectionRequest->id);
+        }
+        return $this->success([
+            'currentPage' => $collectionRequests->currentPage(),
+            'lastPage' => $collectionRequests->lastPage(),
+            'size' => $collectionRequests->total(),
+            "requests"=>AdminViewCollectionResource::collection($collectionRequests)
+        ]);
     }
 
     public function changeCollection($id, ChangeCollectionRequest $request)

@@ -36,7 +36,8 @@ class WordCollectionService
             $newData = [
                 'name' => $data['name'],
                 'text_id' => $createdText['id'],
-                'status' => $data['status']
+                'status' => $data['status'],
+                'color'=> $data['color'],
             ];
             $wordCollection = $this->wordCollectionRepository->createCollection($newData);
             if (isset($data['banner']) && isset($data['poster'])) {
@@ -90,14 +91,14 @@ class WordCollectionService
         return $wordCollection;
     }
 
-    public function getAllWordCollections()
+    public function getAllWordCollections($searchQuery)
     {
-        return $this->wordCollectionRepository->getAllWordCollections();
+        return $this->wordCollectionRepository->getAllWordCollections($searchQuery);
     }
 
-    public function getRequestsForPublish()
+    public function getRequestsForPublish($searchQuery)
     {
-        return $this->wordCollectionRepository->getRequestsForPublish();
+        return $this->wordCollectionRepository->getRequestsForPublish($searchQuery);
     }
 
     public function changeCollection($id, $data)
