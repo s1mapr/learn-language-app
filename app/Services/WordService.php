@@ -32,4 +32,9 @@ class WordService
     public function getAllWords($query){
         return $this->wordRepository->getAllWords($query);
     }
+
+    public function updateWord($id, $data)
+    {
+        return $this->wordRepository->updateWord($id, $data);
+    }
 }

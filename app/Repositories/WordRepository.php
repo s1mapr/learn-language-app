@@ -16,4 +16,11 @@ class WordRepository
         return Word::where('word', 'like', '%' . $searchQuery . '%')
             ->paginate(10);
     }
+
+    public function updateWord($id, $data)
+    {
+        $word = Word::find($id);
+        $word->update($data);
+        return $word;
+    }
 }

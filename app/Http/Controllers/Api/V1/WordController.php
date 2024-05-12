@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SearchWordRequest;
+use App\Http\Requests\V1\UpdateWordRequest;
 use App\Http\Resources\V1\WordResource;
 use App\Services\WordService;
 use App\Traits\HttpResponseTrait;
@@ -29,5 +30,14 @@ class WordController extends Controller
             'size' => $words->total(),
             "words" => WordResource::collection($words)
             ]);
+    }
+
+    public function updateWord($id, UpdateWordRequest $request)
+    {
+        $data = $request->validated();
+        $word = $this->wordService->updateWord($id, $data);
+        return $this->success(
+            new WordResource($word),
+        );
     }
 }

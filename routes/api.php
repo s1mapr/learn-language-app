@@ -22,6 +22,7 @@ Route::prefix('/v1/auth')->name('auth.')->controller(Controllers\AuthController:
 Route::prefix('/v1/words')->name('words.')->controller(Controllers\WordController::class)->group(function () {
 
     Route::get('/', 'getAllWords')->name('getAllWords');
+    Route::patch('/{id}', 'updateWord')->name('updateWord');
 
 });
 
