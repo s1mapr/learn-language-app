@@ -23,7 +23,7 @@ class WordController extends Controller
     public function getAllWords(SearchWordRequest $request)
     {
         $query = $request->get('query');
-        $words = $this->wordService->getAllWords($query);
+        $words = $this->wordService->getAllWordsWithPagination($query);
         return $this->success([
             'currentPage' => $words->currentPage(),
             'lastPage' => $words->lastPage(),

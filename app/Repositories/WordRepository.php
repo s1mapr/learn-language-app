@@ -11,10 +11,15 @@ class WordRepository
         return Word::firstOrCreate($word);
     }
 
-    public function getAllWords($searchQuery)
+    public function getAllWordsWithPagination($searchQuery)
     {
         return Word::where('word', 'like', '%' . $searchQuery . '%')
             ->paginate(12);
+    }
+
+    public function getAllWords()
+    {
+        return Word::all();
     }
 
     public function updateWord($id, $data)

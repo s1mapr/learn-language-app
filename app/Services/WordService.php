@@ -29,8 +29,13 @@ class WordService
         return $this->wordRepository->saveWord($word);
     }
 
-    public function getAllWords($query){
-        return $this->wordRepository->getAllWords($query);
+    public function getAllWordsWithPagination($query){
+        return $this->wordRepository->getAllWordsWithPagination($query);
+    }
+
+    public function getAllWords()
+    {
+        return $this->wordRepository->getAllWords();
     }
 
     public function updateWord($id, $data)
