@@ -42,9 +42,9 @@ class WordCollectionSeeder extends Seeder
         ];
         $wordCollection1 = $this->wordCollection->createWordCollection($categoryData1);
         $wordCollection2 = $this->wordCollection->createWordCollection($categoryData2);
-        $this->userWordCollectionService->startCollection($categoryData1['userId'], $wordCollection1->id);
-        $this->userWordCollectionService->makeUserAuthorOfCollection($categoryData1['userId'], $wordCollection1->id);
-        $this->userWordCollectionService->startCollection($categoryData2['userId'], $wordCollection2->id);
-        $this->userWordCollectionService->makeUserAuthorOfCollection($categoryData2['userId'], $wordCollection2->id);
+        $this->userWordCollectionService->startCollection(1, $wordCollection1['id']);
+        $this->userWordCollectionService->makeUserAuthorOfCollection(1, 1);
+        $this->userWordCollectionService->startCollection(1, 2);
+        $this->userWordCollectionService->makeUserAuthorOfCollection(1, 2);
     }
 }
