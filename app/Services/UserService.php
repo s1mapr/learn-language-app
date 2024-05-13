@@ -33,9 +33,9 @@ class UserService
         return $this->userRepository->getUserById($userId);
     }
 
-    public function getAllUsers()
+    public function getAllUsers($searchQuery)
     {
-        return $this->userRepository->getAllUsers();
+        return $this->userRepository->getAllUsers($searchQuery);
     }
 
     public function blockOrUnblockUser($id)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SearchCollectionRequest;
+use App\Http\Requests\V1\SearchUserRequest;
 use App\Http\Requests\V1\UpdateUserRequest;
 use App\Http\Resources\V1\AdminViewUserResource;
 use App\Http\Resources\V1\UserResource;
@@ -32,9 +33,10 @@ class UserController extends Controller
         $this->wordCollectionService = $wordCollectionService;
     }
 
-    public function index()
+    public function index(SearchUserRequest $request)
     {
-        $users = $this->userService->getAllUsers();
+        $searchQuery = $request->get('query');
+        $users = $this->userService->getAllUsers($searchQuery);
         return $this->success([
             'currentPage' => $users->currentPage(),
             'lastPage' => $users->lastPage(),

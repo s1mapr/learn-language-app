@@ -34,9 +34,10 @@ class UserRepository
         return User::find($userId);
     }
 
-    public function getAllUsers()
+    public function getAllUsers($searchQuery)
     {
-        return User::paginate(12);
+        return User::where('email', 'like', '%' . $searchQuery . '%')
+        ->paginate(12);
     }
 
     public function blockOrUnblockUser($id)
