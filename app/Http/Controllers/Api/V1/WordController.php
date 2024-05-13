@@ -34,7 +34,7 @@ class WordController extends Controller
 
     public function getWordById($id)
     {
-        return new WordResource($this->wordService->getWordById($id));
+        return $this->success(new WordResource($this->wordService->getWordById($id)));
     }
 
     public function updateWord($id, UpdateWordRequest $request)

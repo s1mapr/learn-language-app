@@ -50,7 +50,9 @@ class UserController extends Controller
 
         $data = $request->validated();
         $user = $this->userService->updateUser($id, $data);
-        return $this->success(new UserResource($user));
+        return $this->success([
+            'user'=>new UserResource($user)
+        ]);
     }
 
     public function startCollection($collectionId)
