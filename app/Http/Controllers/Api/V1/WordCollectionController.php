@@ -43,7 +43,12 @@ class WordCollectionController extends Controller
         foreach ($wordCollections as $wordCollection){
             $wordCollection['userId'] = $this->userWordCollectionService->getAuthorIdOfCollection($wordCollection->id);
         }
-        return $this->success(AdminViewCollectionResource::collection($wordCollections));
+        return $this->success([
+            'currentPage' => $wordCollections->currentPage(),
+            'lastPage' => $wordCollections->lastPage(),
+            'size' => $wordCollections->total(),
+            'data'=>AdminViewCollectionResource::collection($wordCollections)
+        ]);
     }
 
     public function store(StoreWordCollectionRequest $request)

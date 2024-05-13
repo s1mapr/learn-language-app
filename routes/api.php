@@ -32,7 +32,7 @@ Route::prefix('/v1/users')->name('users.')->controller(Controllers\UserControlle
     Route::get('/', 'index')->name('index');
     Route::get('/words', 'getUserWords')->name('getUserWords')->middleware('auth:user');
     Route::get('/collections', 'userCollections')->name('userCollections')->middleware('auth:user');
-    Route::get('/{id}', 'getUserById')->name('getUserById');
+    Route::get('/{id}', 'getUserById')->name('getUserById')->middleware(['auth:user,admin']);
     Route::patch('/{id}', 'update')->name('update')->middleware(['auth:user,admin']);
     Route::patch('/{id}/blockOrUnblock', 'blockOrUnblockUser')->name('blockOrUnblockUser');
     Route::patch('/like/{id}', 'likeOrUnlikeCollection')->name('likeOrUnlikeCollection');
