@@ -82,9 +82,9 @@ class UserController extends Controller
         foreach ($wordCollections as $wordCollection) {
             $words = $wordCollection->words;
             $wordsCount = count($words);
-            $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
-            $wordCollection['wordsCount'] = $wordsCount;
-            $wordCollection['wordsLearned'] = $wordsLearned;
+            $wordsLearned = $user->words()->count();
+            $wordCollection['wordsCount'] = $wordsLearned;
+            $wordCollection['wordsLearned'] = $wordsCount;
             $wordCollection['isLiked'] = $this->userWordCollectionService->checkIfUserLikedCollection($userId, $wordCollection->id);
             $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
         }
