@@ -51,5 +51,5 @@ Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\Wo
     Route::get('/{id}/text', 'getTextForCollection')->name('getTextForCollection')->middleware('auth:user');
     Route::get('/{id}/quiz', 'getQuizForCollection')->name('getQuizForCollection')->middleware('auth:user');
     Route::get('/{id}/flashCards', 'getFlashCardsForCollection')->name('getFlashCardsForCollection')->middleware('auth:user');
-    Route::patch('/{id}', 'changeCollection')->name('changeCollection')->middleware('auth:user');
+    Route::patch('/{id}', 'changeCollection')->name('changeCollection')->middleware('auth:user, admin');
 });
