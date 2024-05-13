@@ -14,7 +14,7 @@ class WordRepository
     public function getAllWords($searchQuery)
     {
         return Word::where('word', 'like', '%' . $searchQuery . '%')
-            ->paginate(10);
+            ->paginate(12);
     }
 
     public function updateWord($id, $data)
@@ -22,5 +22,10 @@ class WordRepository
         $word = Word::find($id);
         $word->update($data);
         return $word;
+    }
+
+    public function getWordById($id)
+    {
+        return Word::find($id);
     }
 }

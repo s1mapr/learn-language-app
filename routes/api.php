@@ -22,6 +22,7 @@ Route::prefix('/v1/auth')->name('auth.')->controller(Controllers\AuthController:
 Route::prefix('/v1/words')->name('words.')->controller(Controllers\WordController::class)->group(function () {
 
     Route::get('/', 'getAllWords')->name('getAllWords');
+    Route::get('/{id}', 'getWordById')->name('getWordById');
     Route::patch('/{id}', 'updateWord')->name('updateWord');
 
 });
@@ -46,7 +47,7 @@ Route::prefix('/v1/collections')->name('collection.')->controller(Controllers\Wo
     Route::get('/requests', 'getRequestsForPublish')->name('getRequestsForPublish');
     Route::get('/public', 'getPublicCollections')->name('getPublicCollections')->middleware('auth:user');
     Route::get('/public/search', 'searchPublicCollections')->name('searchPublicCollections')->middleware('auth:user');
-    Route::get('/{id}', 'show')->name('show')->middleware('auth:user');
+    Route::get('/{id}', 'show')->name('show')->middleware('auth:user,admin');
     Route::get('/{id}/text', 'getTextForCollection')->name('getTextForCollection')->middleware('auth:user');
     Route::get('/{id}/quiz', 'getQuizForCollection')->name('getQuizForCollection');
     Route::get('/{id}/flashCards', 'getFlashCardsForCollection')->name('getFlashCardsForCollection');

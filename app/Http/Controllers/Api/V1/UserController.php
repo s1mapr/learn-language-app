@@ -74,7 +74,7 @@ class UserController extends Controller
         $user = $this->userService->getUserById($userId);
         $wordCollections = $user->wordCollections()
             ->where('name', 'like', '%' . $searchQuery . '%')
-            ->paginate(10);
+            ->paginate(12);
         foreach ($wordCollections as $wordCollection) {
             $words = $wordCollection->words;
             $wordsCount = count($words);

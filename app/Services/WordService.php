@@ -37,4 +37,9 @@ class WordService
     {
         return $this->wordRepository->updateWord($id, $data);
     }
+
+    public function getWordById($id)
+    {
+        return $this->wordRepository->getWordById($id);
+    }
 }

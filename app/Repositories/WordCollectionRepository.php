@@ -17,14 +17,14 @@ class WordCollectionRepository
     public function getPublicCollections($searchQuery){
         return WordCollection::where('status', 'public')
             ->where('name', 'like', '%'.$searchQuery.'%')
-            ->paginate(10);
+            ->paginate(12);
     }
 
     public function getAllWordCollections($searchQuery)
     {
         return WordCollection::with('text')
             ->where('name', 'like', '%'.$searchQuery.'%')
-            ->paginate(10);
+            ->paginate(12);
     }
 
     public function getRequestsForPublish($searchQuery)
@@ -32,7 +32,7 @@ class WordCollectionRepository
         return WordCollection::where('status', 'pending')
             ->where('name', 'like', '%'.$searchQuery.'%')
             ->with('text')
-            ->paginate(10);
+            ->paginate(12);
     }
 
     public function changeCollection($id, $data)

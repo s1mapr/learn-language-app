@@ -36,7 +36,7 @@ class UserRepository
 
     public function getAllUsers()
     {
-        return User::paginate(10);
+        return User::paginate(12);
     }
 
     public function blockOrUnblockUser($id)

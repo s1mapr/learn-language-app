@@ -32,6 +32,11 @@ class WordController extends Controller
             ]);
     }
 
+    public function getWordById($id)
+    {
+        return new WordResource($this->wordService->getWordById($id));
+    }
+
     public function updateWord($id, UpdateWordRequest $request)
     {
         $data = $request->validated();
