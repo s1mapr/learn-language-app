@@ -1,0 +1,2125 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Yoko API Documentation",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/": {},
+        "/api/v1/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register users",
+                "operationId": "5aff8982c53bc6d49f34b9064d057b85",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Maksym"
+                                            },
+                                            "surname": {
+                                                "type": "string",
+                                                "example": "Prokopenko"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "MaksymProkopenko@gmail.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "password"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "MaksymProkopenko@gmail.com"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Maksym"
+                                                        },
+                                                        "surname": {
+                                                            "type": "string",
+                                                            "example": "Prokopenko"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "4|c6u23dX8dk3A4lxDQpdfO4oNclfbneljphpw5xZN9c1728e7"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login for users",
+                "operationId": "2f2f70d659c197d0a78e19c22365827a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "example": "MaksymProkopenko@gmail.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "password"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "MaksymProkopenko@gmail.com"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Maksym"
+                                                        },
+                                                        "surname": {
+                                                            "type": "string",
+                                                            "example": "Prokopenko"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "4|c6u23dX8dk3A4lxDQpdfO4oNclfbneljphpw5xZN9c1728e7"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/admin-login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login for admins",
+                "operationId": "cc9f35eb743ca6c2b432b2d7bc542b0e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "example": "admin@admin.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "password"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "MaksymProkopenko@gmail.com"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "4|c6u23dX8dk3A4lxDQpdfO4oNclfbneljphpw5xZN9c1728e7"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all users (Route only for admins)",
+                "operationId": "a022ddae96a9d9fa2b5fa09801eb6c34",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query for searching particular user by email",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "lastPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "users": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "MaksymProkopenko@gmail.com"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Maksym"
+                                                            },
+                                                            "surname": {
+                                                                "type": "string",
+                                                                "example": "Prokopenko"
+                                                            },
+                                                            "isBlocked": {
+                                                                "type": "boolean",
+                                                                "example": "0"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/{id} (Route only for users)": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user by id",
+                "operationId": "65631d3bb2463be7db40d65017038da0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "MaksymProkopenko@gmail.com"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Maksym"
+                                                        },
+                                                        "surname": {
+                                                            "type": "string",
+                                                            "example": "Prokopenko"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/collections": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all user collections",
+                "operationId": "f40e2bf41cb3f637d8ea8c9f6cf7c7e2",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query for searching collections by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "lastPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Tourism"
+                                                            },
+                                                            "text": {
+                                                                "type": "string",
+                                                                "example": "Discover the enchanting beauty of Italy's Amalfi Coast. With its picturesque cliffside villages, azure waters, and vibrant culture, the Amalfi Coast offers an unforgettable travel experience. Whether you're exploring the historic streets of Positano, indulging in delicious Mediterranean cuisine, or lounging on pristine beaches, every moment is a postcard-worthy memory waiting to be captured."
+                                                            },
+                                                            "translationUk": {
+                                                                "type": "string",
+                                                                "example": "Відкрийте для себе чарівну красу узбережжя Амальфі в Італії. З його мальовничими селами на скелях, блакитними водами та яскравою культурою узбережжя Амальфі пропонує незабутні враження від подорожей. Якщо ви досліджуєте історичні вулиці Позітано, смакуєте смачні страви середземноморської кухні чи відпочиваєте на незайманих пляжах, кожна мить — це пам’ять, гідна листівки, яка чекає, щоб її зафіксувати."
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "public"
+                                                            },
+                                                            "posterUrl": {
+                                                                "type": "string",
+                                                                "example": "https://images-cdn.ubuy.co.in/633ff1157e3fbc25557517c8-one-piece-poster-japanese-anime-posters.jpg"
+                                                            },
+                                                            "bannerUrl": {
+                                                                "type": "string",
+                                                                "example": "https://i.pinimg.com/736x/00/a7/81/00a781cc93f26bc0b753e18b240673e2.jpg"
+                                                            },
+                                                            "likes": {
+                                                                "type": "integer",
+                                                                "example": "100"
+                                                            },
+                                                            "views": {
+                                                                "type": "integer",
+                                                                "example": "2266"
+                                                            },
+                                                            "wordsCount": {
+                                                                "type": "integer",
+                                                                "example": "41"
+                                                            },
+                                                            "wordsLearned": {
+                                                                "type": "integer",
+                                                                "example": "25"
+                                                            },
+                                                            "isStarted": {
+                                                                "type": "boolean",
+                                                                "example": "0"
+                                                            },
+                                                            "isLiked": {
+                                                                "type": "boolean",
+                                                                "example": "0"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/{id}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user data",
+                "operationId": "bf143d2b06c86da1bedae189ba91d052",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Maksym"
+                                            },
+                                            "surname": {
+                                                "type": "string",
+                                                "example": "Prokopenko"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "password"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "MaksymProkopenko@gmail.com"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Maksym"
+                                                        },
+                                                        "surname": {
+                                                            "type": "string",
+                                                            "example": "Prokopenko"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/{id}/blockOrUnblock": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Block or unblock user",
+                "operationId": "4a516241e041b5ac0cc265ed594f6f05",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "user status successfully changed"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/like/{id}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "like collection (route only for users)",
+                "operationId": "2c6a600b280a1d4a506064c82faf0102",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of collection",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/startCollection/{id}": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User start learning collection (Route only for users)",
+                "operationId": "8c36c5b3e69ac92f5abdc7c356b8da58",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of collection",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Tourism"
+                                                    },
+                                                    "text": {
+                                                        "type": "string",
+                                                        "example": "Discover the enchanting beauty of Italy's Amalfi Coast. With its picturesque cliffside villages, azure waters, and vibrant culture, the Amalfi Coast offers an unforgettable travel experience. Whether you're exploring the historic streets of Positano, indulging in delicious Mediterranean cuisine, or lounging on pristine beaches, every moment is a postcard-worthy memory waiting to be captured."
+                                                    },
+                                                    "translationUk": {
+                                                        "type": "string",
+                                                        "example": "Відкрийте для себе чарівну красу узбережжя Амальфі в Італії. З його мальовничими селами на скелях, блакитними водами та яскравою культурою узбережжя Амальфі пропонує незабутні враження від подорожей. Якщо ви досліджуєте історичні вулиці Позітано, смакуєте смачні страви середземноморської кухні чи відпочиваєте на незайманих пляжах, кожна мить — це пам’ять, гідна листівки, яка чекає, щоб її зафіксувати."
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "public"
+                                                    },
+                                                    "posterUrl": {
+                                                        "type": "string",
+                                                        "example": "https://images-cdn.ubuy.co.in/633ff1157e3fbc25557517c8-one-piece-poster-japanese-anime-posters.jpg"
+                                                    },
+                                                    "bannerUrl": {
+                                                        "type": "string",
+                                                        "example": "https://i.pinimg.com/736x/00/a7/81/00a781cc93f26bc0b753e18b240673e2.jpg"
+                                                    },
+                                                    "likes": {
+                                                        "type": "integer",
+                                                        "example": "100"
+                                                    },
+                                                    "views": {
+                                                        "type": "integer",
+                                                        "example": "2266"
+                                                    },
+                                                    "wordsCount": {
+                                                        "type": "integer",
+                                                        "example": "41"
+                                                    },
+                                                    "wordsLearned": {
+                                                        "type": "integer",
+                                                        "example": "25"
+                                                    },
+                                                    "isStarted": {
+                                                        "type": "boolean",
+                                                        "example": "0"
+                                                    },
+                                                    "isLiked": {
+                                                        "type": "boolean",
+                                                        "example": "0"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/collections": {
+            "get": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Get all word collections (Route only for admins)",
+                "operationId": "28d1978a07fac995dbb622fb8cae702c",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query for searching collections by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "lastPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Tourism"
+                                                            },
+                                                            "text": {
+                                                                "type": "string",
+                                                                "example": "Discover the enchanting beauty of Italy's Amalfi Coast. With its picturesque cliffside villages, azure waters, and vibrant culture, the Amalfi Coast offers an unforgettable travel experience. Whether you're exploring the historic streets of Positano, indulging in delicious Mediterranean cuisine, or lounging on pristine beaches, every moment is a postcard-worthy memory waiting to be captured."
+                                                            },
+                                                            "translationUk": {
+                                                                "type": "string",
+                                                                "example": "Відкрийте для себе чарівну красу узбережжя Амальфі в Італії. З його мальовничими селами на скелях, блакитними водами та яскравою культурою узбережжя Амальфі пропонує незабутні враження від подорожей. Якщо ви досліджуєте історичні вулиці Позітано, смакуєте смачні страви середземноморської кухні чи відпочиваєте на незайманих пляжах, кожна мить — це пам’ять, гідна листівки, яка чекає, щоб її зафіксувати."
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "private"
+                                                            },
+                                                            "userId": {
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Create collection (Route only for users)",
+                "operationId": "3c76a2030f5dfd273ca9fd9b50b13259",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "banner": {
+                                        "description": "Banner file",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "poster": {
+                                        "description": "Poster file",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "name": {
+                                        "description": "Name field",
+                                        "type": "string"
+                                    },
+                                    "text": {
+                                        "description": "Text field",
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "description": "Status field (can be private/pending/public)",
+                                        "type": "string"
+                                    },
+                                    "color": {
+                                        "description": "Color field (hex)",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Tourism"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "public"
+                                                },
+                                                "textId": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "posterUrl": {
+                                                    "type": "string",
+                                                    "example": "https://empat-final-project-pictures.s3.amazonaws.com/public/posters/poster11.jpg"
+                                                },
+                                                "bannerUrl": {
+                                                    "type": "string",
+                                                    "example": "https://empat-final-project-pictures.s3.amazonaws.com/public/banners/banner11.jpg"
+                                                },
+                                                "wordsCount": {
+                                                    "type": "integer",
+                                                    "example": "41"
+                                                },
+                                                "wordsLearned": {
+                                                    "type": "integer",
+                                                    "example": "25"
+                                                },
+                                                "isStarted": {
+                                                    "type": "boolean",
+                                                    "example": "1"
+                                                },
+                                                "coloer": {
+                                                    "type": "string",
+                                                    "example": "#FFFFFF"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/collections/{id}/comment": {
+            "post": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Create comments",
+                "operationId": "420915aa40a4e87e977b8d11df0178c7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "content": {
+                                                "type": "string",
+                                                "example": "my first comment"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "content": {
+                                                    "type": "string",
+                                                    "example": "my first comment"
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "MaksymProkopenko@gmail.com"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Maksym"
+                                                        },
+                                                        "surname": {
+                                                            "type": "string",
+                                                            "example": "Prokopenko"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/collections/public": {
+            "get": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Get public word collections",
+                "operationId": "84651903f18d097cb490846b38c77892",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query for searching collections by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "lastPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Tourism"
+                                                            },
+                                                            "text": {
+                                                                "type": "string",
+                                                                "example": "Discover the enchanting beauty of Italy's Amalfi Coast. With its picturesque cliffside villages, azure waters, and vibrant culture, the Amalfi Coast offers an unforgettable travel experience. Whether you're exploring the historic streets of Positano, indulging in delicious Mediterranean cuisine, or lounging on pristine beaches, every moment is a postcard-worthy memory waiting to be captured."
+                                                            },
+                                                            "translationUk": {
+                                                                "type": "string",
+                                                                "example": "Відкрийте для себе чарівну красу узбережжя Амальфі в Італії. З його мальовничими селами на скелях, блакитними водами та яскравою культурою узбережжя Амальфі пропонує незабутні враження від подорожей. Якщо ви досліджуєте історичні вулиці Позітано, смакуєте смачні страви середземноморської кухні чи відпочиваєте на незайманих пляжах, кожна мить — це пам’ять, гідна листівки, яка чекає, щоб її зафіксувати."
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "public"
+                                                            },
+                                                            "posterUrl": {
+                                                                "type": "string",
+                                                                "example": "https://images-cdn.ubuy.co.in/633ff1157e3fbc25557517c8-one-piece-poster-japanese-anime-posters.jpg"
+                                                            },
+                                                            "bannerUrl": {
+                                                                "type": "string",
+                                                                "example": "https://i.pinimg.com/736x/00/a7/81/00a781cc93f26bc0b753e18b240673e2.jpg"
+                                                            },
+                                                            "likes": {
+                                                                "type": "integer",
+                                                                "example": "100"
+                                                            },
+                                                            "views": {
+                                                                "type": "integer",
+                                                                "example": "2266"
+                                                            },
+                                                            "wordsCount": {
+                                                                "type": "integer",
+                                                                "example": "41"
+                                                            },
+                                                            "wordsLearned": {
+                                                                "type": "integer",
+                                                                "example": "25"
+                                                            },
+                                                            "isStarted": {
+                                                                "type": "boolean",
+                                                                "example": "0"
+                                                            },
+                                                            "isLiked": {
+                                                                "type": "boolean",
+                                                                "example": "0"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/collections/requests": {
+            "get": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Get requests for publication",
+                "operationId": "949468c93f1c1dceee9eb90590cc5cd2",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query for searching collections by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "lastPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "requests": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Tourism"
+                                                            },
+                                                            "text": {
+                                                                "type": "string",
+                                                                "example": "Discover the enchanting beauty of Italy's Amalfi Coast. With its picturesque cliffside villages, azure waters, and vibrant culture, the Amalfi Coast offers an unforgettable travel experience. Whether you're exploring the historic streets of Positano, indulging in delicious Mediterranean cuisine, or lounging on pristine beaches, every moment is a postcard-worthy memory waiting to be captured."
+                                                            },
+                                                            "translationUk": {
+                                                                "type": "string",
+                                                                "example": "Відкрийте для себе чарівну красу узбережжя Амальфі в Італії. З його мальовничими селами на скелях, блакитними водами та яскравою культурою узбережжя Амальфі пропонує незабутні враження від подорожей. Якщо ви досліджуєте історичні вулиці Позітано, смакуєте смачні страви середземноморської кухні чи відпочиваєте на незайманих пляжах, кожна мить — це пам’ять, гідна листівки, яка чекає, щоб її зафіксувати."
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "public"
+                                                            },
+                                                            "userId": {
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/collections/{id}": {
+            "get": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Get word collection by id",
+                "operationId": "f6fcdaeaad7b4a3f62ef9aa5c31b3fdb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of collection",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Tourism"
+                                                },
+                                                "text": {
+                                                    "type": "string",
+                                                    "example": "Discover the enchanting beauty of Italy's Amalfi Coast. With its picturesque cliffside villages, azure waters, and vibrant culture, the Amalfi Coast offers an unforgettable travel experience. Whether you're exploring the historic streets of Positano, indulging in delicious Mediterranean cuisine, or lounging on pristine beaches, every moment is a postcard-worthy memory waiting to be captured."
+                                                },
+                                                "translationUk": {
+                                                    "type": "string",
+                                                    "example": "Відкрийте для себе чарівну красу узбережжя Амальфі в Італії. З його мальовничими селами на скелях, блакитними водами та яскравою культурою узбережжя Амальфі пропонує незабутні враження від подорожей. Якщо ви досліджуєте історичні вулиці Позітано, смакуєте смачні страви середземноморської кухні чи відпочиваєте на незайманих пляжах, кожна мить — це пам’ять, гідна листівки, яка чекає, щоб її зафіксувати."
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "public"
+                                                },
+                                                "posterUrl": {
+                                                    "type": "string",
+                                                    "example": "https://images-cdn.ubuy.co.in/633ff1157e3fbc25557517c8-one-piece-poster-japanese-anime-posters.jpg"
+                                                },
+                                                "bannerUrl": {
+                                                    "type": "string",
+                                                    "example": "https://i.pinimg.com/736x/00/a7/81/00a781cc93f26bc0b753e18b240673e2.jpg"
+                                                },
+                                                "likes": {
+                                                    "type": "integer",
+                                                    "example": "100"
+                                                },
+                                                "views": {
+                                                    "type": "integer",
+                                                    "example": "2266"
+                                                },
+                                                "wordsCount": {
+                                                    "type": "integer",
+                                                    "example": "41"
+                                                },
+                                                "wordsLearned": {
+                                                    "type": "integer",
+                                                    "example": "25"
+                                                },
+                                                "isStarted": {
+                                                    "type": "boolean",
+                                                    "example": "0"
+                                                },
+                                                "isLiked": {
+                                                    "type": "boolean",
+                                                    "example": "0"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Update collection data",
+                "operationId": "f80ff3dc57c2d8d351943eb40cbc3404",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of collection",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Text name"
+                                            },
+                                            "text": {
+                                                "type": "string",
+                                                "example": "Text in english"
+                                            },
+                                            "translationUk": {
+                                                "type": "string",
+                                                "example": "Текст українською"
+                                            },
+                                            "status": {
+                                                "type": "string",
+                                                "example": "public"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "collection successfully changed"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/collections/{id}/quiz": {
+            "get": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Get quiz for collection (Route only for users)",
+                "operationId": "186da3de4e5aa8d81fe279d9a0b8a14a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of collection",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "word": {
+                                                        "type": "string",
+                                                        "example": "dog"
+                                                    },
+                                                    "answers": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "translation": {
+                                                                    "type": "string",
+                                                                    "example": "собака"
+                                                                },
+                                                                "isAnswer": {
+                                                                    "type": "boolean",
+                                                                    "example": true
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/collections/{id}/flashCards": {
+            "get": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Get flash cards for collection (Route only for users)",
+                "operationId": "6f615d50fbb674321e1025ac962ca239",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of collection",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "word": {
+                                                        "type": "string",
+                                                        "example": "dog"
+                                                    },
+                                                    "translationUk": {
+                                                        "type": "string",
+                                                        "example": "собака"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/collections/{id}/text": {
+            "get": {
+                "tags": [
+                    "Word Collection"
+                ],
+                "summary": "Get text for collection (Route only for users)",
+                "operationId": "d0f249fea009c730dfda8a279bd44525",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of collection",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "text": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "text": {
+                                                            "type": "string",
+                                                            "example": "Discover the enchanting beauty of Italy's Amalfi Coast. With its picturesque cliffside villages, azure waters, and vibrant culture, the Amalfi Coast offers an unforgettable travel experience. Whether you're exploring the historic streets of Positano, indulging in delicious Mediterranean cuisine, or lounging on pristine beaches, every moment is a postcard-worthy memory waiting to be captured."
+                                                        },
+                                                        "translationUk": {
+                                                            "type": "string",
+                                                            "example": "Відкрийте для себе чарівну красу узбережжя Амальфі в Італії. З його мальовничими селами на скелях, блакитними водами та яскравою культурою узбережжя Амальфі подарує незабутні враження від подорожей. Якщо ви досліджуєте історичні вулиці Позітано, смакуєте смачні страви середземноморської кухні чи відпочиваєте на незайманих пляжах, кожна мить — це пам’ять, гідна листівки, яка чекає, щоб її зафіксувати."
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "words": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "word": {
+                                                                "type": "string",
+                                                                "example": "dog"
+                                                            },
+                                                            "translationUk": {
+                                                                "type": "string",
+                                                                "example": "собака"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/words": {
+            "get": {
+                "tags": [
+                    "Word"
+                ],
+                "summary": "Get all words (Route only for admins)",
+                "operationId": "a51c08df4002d393e38001de64aee284",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query for searching words by english meaning",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "lastPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "words": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "word": {
+                                                                "type": "string",
+                                                                "example": "this"
+                                                            },
+                                                            "translationUk": {
+                                                                "type": "string",
+                                                                "example": "цей"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/words/{id}": {
+            "get": {
+                "tags": [
+                    "Word"
+                ],
+                "summary": "Get word by id (Route only for admins)",
+                "operationId": "b5e46ed00e384318db63227e4b62d982",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of word",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "word": {
+                                                    "type": "string",
+                                                    "example": "this"
+                                                },
+                                                "translationUk": {
+                                                    "type": "string",
+                                                    "example": "цей"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Word"
+                ],
+                "summary": "Update word",
+                "operationId": "b19121d2ee40a1bf9cc3171d645e1ec6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of word",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "word": {
+                                                "type": "string",
+                                                "example": "dog"
+                                            },
+                                            "translationUk": {
+                                                "type": "string",
+                                                "example": "собака"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Request successful"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "word": {
+                                                    "type": "string",
+                                                    "example": "dog"
+                                                },
+                                                "translationUk": {
+                                                    "type": "string",
+                                                    "example": "собака"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
