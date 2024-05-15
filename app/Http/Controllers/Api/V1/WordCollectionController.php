@@ -58,36 +58,22 @@ class WordCollectionController extends Controller
         $wordCollectionId = $wordCollection['id'];
         $this->userWordCollectionService->startCollection($userId, $wordCollectionId);
         $this->userWordCollectionService->makeUserAuthorOfCollection($userId, $wordCollectionId);
-        $words = $wordCollection->words;
-        $wordsCount = count($words);
-        $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
-        $wordCollection['wordsCount'] = $wordsCount;
-        $wordCollection['wordsLearned'] = $wordsLearned;
-        $wordCollection['isStarted']=true;
-        return $this->success(new StoredWordCollectionResource($wordCollection));
+        $wordCollectionWithDetails = $this->userWordCollectionService->getWordCollectionWithDetails($wordCollection, $userId);
+        return $this->success(new StoredWordCollectionResource($wordCollectionWithDetails));
     }
 
-    //todo refactor this method
     public function getPublicCollections(SearchCollectionRequest $request)
     {
         $searchQuery = $request['query'];
-        $wordCollections = $this->wordCollectionService->getPublicCollections($searchQuery);
         $userId = Auth::id();
-        foreach ($wordCollections as $wordCollection) {
-            $words = $wordCollection->words;
-            $wordsCount = count($words);
-            $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
-            $wordCollection['wordsCount'] = $wordsCount;
-            $wordCollection['wordsLearned'] = $wordsLearned;
-            $wordCollection['isLiked'] = $this->userWordCollectionService->checkIfUserLikedCollection($userId, $wordCollection->id);
-            $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
-        }
+        $wordCollections = $this->wordCollectionService->getPublicCollections($searchQuery);
+        $wordCollectionsWithDetails = $this->userWordCollectionService->getWordCollectionsWithDetails($wordCollections, $userId);
         return $this->success(
             [
                 'currentPage' => $wordCollections->currentPage(),
                 'lastPage' => $wordCollections->lastPage(),
                 'size' => $wordCollections->total(),
-                'data' => WordCollectionResource::collection($wordCollections),
+                'data' => WordCollectionResource::collection($wordCollectionsWithDetails),
             ]
         );
     }
@@ -98,16 +84,9 @@ class WordCollectionController extends Controller
         $userId = Auth::id();
         $wordCollection = $this->wordCollectionService->getWordCollectionById($id);
         $comments = $this->commentService->getCollectionComments($id);
-        $words = $wordCollection->words;
-        $wordsCount = count($words);
-        $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
-        $wordCollection['wordsCount'] = $wordsCount;
-        $wordCollection['wordsLearned'] = $wordsLearned;
-        $wordCollection['comments'] = $comments;
-        $wordCollection['isLiked'] = $this->userWordCollectionService->checkIfUserLikedCollection($userId, $wordCollection->id);
-        $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
+        $wordCollectionWithDetails = $this->userWordCollectionService->getWordCollectionWithDetails($wordCollection, $userId, $comments);
         return $this->success(
-            new WordCollectionResource($wordCollection)
+            new WordCollectionResource($wordCollectionWithDetails)
         );
     }
 

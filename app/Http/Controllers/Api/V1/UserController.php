@@ -8,14 +8,12 @@ use App\Http\Requests\V1\SearchUserRequest;
 use App\Http\Requests\V1\UpdateUserRequest;
 use App\Http\Resources\V1\AdminViewUserResource;
 use App\Http\Resources\V1\UserResource;
-use App\Http\Resources\V1\UserWordCollectionResource;
 use App\Http\Resources\V1\WordCollectionResource;
 use App\Http\Resources\V1\WordResource;
 use App\Services\UserService;
 use App\Services\UserWordCollectionService;
 use App\Services\WordCollectionService;
 use App\Traits\HttpResponseTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -40,18 +38,17 @@ class UserController extends Controller
         return $this->success([
             'currentPage' => $users->currentPage(),
             'lastPage' => $users->lastPage(),
-            'size'=>$users->total(),
-            'users'=>AdminViewUserResource::collection($users)
+            'size' => $users->total(),
+            'users' => AdminViewUserResource::collection($users)
         ]);
     }
 
     public function update($id, UpdateUserRequest $request)
     {
-
         $data = $request->validated();
         $user = $this->userService->updateUser($id, $data);
         return $this->success([
-            'user'=>new UserResource($user)
+            'user' => new UserResource($user)
         ]);
     }
 
@@ -60,38 +57,20 @@ class UserController extends Controller
         $userId = Auth::id();
         $this->userWordCollectionService->startCollection($userId, $collectionId);
         $collection = $this->wordCollectionService->getWordCollectionById($collectionId);
-        $words = $collection->words;
-        $wordsCount = count($words);
-        $wordsLearned = $this->userWordCollectionService->getCountOfUserWords($words, $userId);
-        $collection['wordsCount'] = $wordsCount;
-        $collection['wordsLearned'] = $wordsLearned;
-        $collection['isStarted'] = true;
-        return $this->success(new WordCollectionResource($collection), "collection successfully started");
+        $wordCollectionsWithDetails = $this->userWordCollectionService->getWordCollectionWithDetails($collection, $userId);
+        return $this->success(new WordCollectionResource($wordCollectionsWithDetails), "collection successfully started");
     }
 
-
-    //todo refactor this method
     public function userCollections(SearchCollectionRequest $request)
     {
         $searchQuery = $request->get('query');
         $userId = Auth::id();
         $user = $this->userService->getUserById($userId);
-        $wordCollections = $user->wordCollections()
-            ->where('name', 'like', '%' . $searchQuery . '%')
-            ->paginate(12);
-        foreach ($wordCollections as $wordCollection) {
-            $words = $wordCollection->words;
-            $wordsCount = count($words);
-            $wordsLearned = $user->words()->count();
-            $wordCollection['wordsCount'] = $wordsLearned;
-            $wordCollection['wordsLearned'] = $wordsCount;
-            $wordCollection['isLiked'] = $this->userWordCollectionService->checkIfUserLikedCollection($userId, $wordCollection->id);
-            $wordCollection['isStarted'] = $this->userWordCollectionService->checkIfUserHasCollection($userId, $wordCollection['id']);
-        }
+        $wordCollections = $this->userWordCollectionService->getUserWordCollectionsWithDetails($user, $searchQuery);
         return $this->success([
             'currentPage' => $wordCollections->currentPage(),
             'lastPage' => $wordCollections->lastPage(),
-            'size'=>$wordCollections->total(),
+            'size' => $wordCollections->total(),
             'data' => WordCollectionResource::collection($wordCollections),
         ]);
     }
@@ -103,23 +82,26 @@ class UserController extends Controller
         return $this->success(WordResource::collection($user->words));
     }
 
-    public function getUserById($id){
+    public function getUserById($id)
+    {
         $user = $this->userService->getUserById($id);
         return $this->success(new UserResource($user));
     }
 
-    public function blockOrUnblockUser($id){
+    public function blockOrUnblockUser($id)
+    {
         $this->userService->blockOrUnblockUser($id);
-        return $this->success('','user status  successfully changed');
+        return $this->success('', 'user status  successfully changed');
     }
 
-    public function likeOrUnlikeCollection($collectionId){
+    public function likeOrUnlikeCollection($collectionId)
+    {
         $userId = Auth::id();
         $userCollection = $this->userWordCollectionService->likeOrUnlikeCollection($userId, $collectionId);
-        if(!$userCollection){
-            return $this->error('','user don`t started collection');
+        if (!$userCollection) {
+            return $this->error('', 'user don`t started collection');
         }
-        return $this->success('','success');
+        return $this->success('', 'success');
     }
 
 }

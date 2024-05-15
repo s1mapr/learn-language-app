@@ -55,10 +55,7 @@ class UserWordCollectionService
         $author = $this->userWordCollectionRepository->getAuthorOfCollection($wordCollectionId);
         return $author->user_id;
     }
-//    public function setOrUnsetCollectionInFavorites($userId, $collectionId)
-//    {
-//        $this->userWordCollectionRepository->setOrUnsetCollectionInFavorites($userId, $collectionId);
-//    }
+
     public function likeOrUnlikeCollection($userId, $collectionId)
     {
         $this->wordCollectionService->likePublication($collectionId);
@@ -69,6 +66,55 @@ class UserWordCollectionService
     {
         $isLiked = $this->userWordCollectionRepository->checkIfUserLikedCollection($userId, $wordCollectionId);
         return $isLiked;
+    }
+
+    public function getUserWordCollections($user, $searchQuery)
+    {
+        return $user->wordCollections()
+            ->where('name', 'like', '%' . $searchQuery . '%')
+            ->paginate(12);
+    }
+
+    public function getUserWordCollectionsWithDetails($user, $searchQuery){
+        $wordCollections = $this->getUserWordCollections($user, $searchQuery);
+        foreach ($wordCollections as $wordCollection) {
+            $words = $wordCollection->words;
+            $wordsCount = count($words);
+            $wordsLearned = $user->words()->count();
+            $wordCollection['wordsCount'] = $wordsLearned;
+            $wordCollection['wordsLearned'] = $wordsCount;
+            $wordCollection['isLiked'] = $this->checkIfUserLikedCollection($user->id, $wordCollection->id);
+            $wordCollection['isStarted'] = $this->checkIfUserHasCollection($user->id, $wordCollection['id']);
+        }
+        return $wordCollections;
+    }
+
+    public function getWordCollectionWithDetails($wordCollection, $userId, $comments = null)
+    {
+        $words = $wordCollection->words;
+        $wordsCount = count($words);
+        $wordsLearned = $this->getCountOfUserWords($words, $userId);
+        $wordCollection['wordsCount'] = $wordsCount;
+        $wordCollection['wordsLearned'] = $wordsLearned;
+        $wordCollection['isStarted']=true;
+        if(isset($comments)){
+            $wordCollection['comments'] = $comments;
+        }
+        return $wordCollection;
+    }
+
+    public function getWordCollectionsWithDetails($wordCollections, $userId)
+    {
+        foreach ($wordCollections as $wordCollection) {
+            $words = $wordCollection->words;
+            $wordsCount = count($words);
+            $wordsLearned = $this->getCountOfUserWords($words, $userId);
+            $wordCollection['wordsCount'] = $wordsCount;
+            $wordCollection['wordsLearned'] = $wordsLearned;
+            $wordCollection['isLiked'] = $this->checkIfUserLikedCollection($userId, $wordCollection->id);
+            $wordCollection['isStarted'] = $this->checkIfUserHasCollection($userId, $wordCollection['id']);
+        }
+        return $wordCollections;
     }
 
 }
