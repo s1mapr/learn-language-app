@@ -3,28 +3,25 @@
 namespace App\Services;
 
 use App\Repositories\TextRepository;
-use Google\Cloud\Translate\V2\TranslateClient;
-use Stichoza\GoogleTranslate\GoogleTranslate;
+use App\Services\impl\GoogleApiTranslationService;
+use App\Services\impl\GoogleLibTranslationService;
 
 class TextService
 {
     private TextRepository $textRepository;
+    private TranslationServiceI $translationService;
 
 
-    public function __construct(TextRepository $textRepository)
+    public function __construct(TextRepository $textRepository, GoogleLibTranslationService $translationService)
     {
         $this->textRepository = $textRepository;
+        $this->translationService = $translationService;
     }
 
 
     public function saveText($text){
-        $translate = new TranslateClient([
-            'key' => env('GOOGLE_API_KEY'),
-        ]);
-        $translatedText = $translate->translate($text['text'], [
-            'target' => 'uk'
-        ]);
-        $text['translation_uk'] = $translatedText['text'];
+        $translation = $this->translationService->translate($text['text']);
+        $text['translation_uk'] = $translation;
         return $this->textRepository->saveText($text);
     }
 
